@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> pager status_on_top fix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20pager%20status_on_top%20fix&In-Reply-To=%3C20060226121446.GF16719%40bolero.cs.tu-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000031.html">
+   <LINK REL="Next"  HREF="000036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>pager status_on_top fix</H1>
+    <B>Rocco Rutte</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20pager%20status_on_top%20fix&In-Reply-To=%3C20060226121446.GF16719%40bolero.cs.tu-berlin.de%3E"
+       TITLE="pager status_on_top fix">pdmef at gmx.net
+       </A><BR>
+    <I>Sun Feb 26 13:14:47 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000031.html">pager status_on_top fix
+</A></li>
+        <LI>Next message: <A HREF="000036.html">pager status_on_top fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#34">[ date ]</a>
+              <a href="thread.html#34">[ thread ]</a>
+              <a href="subject.html#34">[ subject ]</a>
+              <a href="author.html#34">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>* Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+&gt;<i>Michael Kjorling reported in the other thread [sidbar scrolling fix]
+</I>&gt;<i>that:
+</I>
+&gt;&gt;<i> ..whenever I am in the pager, the message status line (which normally
+</I>&gt;&gt;<i> shows sender, subject and perhaps a few other things that I'm
+</I>&gt;&gt;<i> forgetting right now) is drawn, but blank. Toggling sidebar_visible
+</I>&gt;&gt;<i> doesn't seem to have any effect on this.
+</I>
+I still saw no screenshot... ;-(
+
+&gt;<i>and I could reproduce that.
+</I>&gt;<i>the patchlet below &quot;works for me&quot; ;)
+</I>
+The patch moves the pager status line right by $sidebar_width cells in 
+the first screen line. But: from (0,0) to (0,$sidebar_width) the screen 
+is left blank which looks ugly with colors.
+
+I still have no input on whether we wan't to always adjust all status 
+line to the actual width of the screen exlcluding the sidebar. For 
+example, with and without the patch, the pager status line is still the 
+only status line being as wide as the pager. The index status line is 
+full-screen and not as wide as the index screen. ;-((
+
+That's what I'd like to see solved... since for the problem I don't know 
+the best place to fix the blanks: within the sidebar or within the 
+pager?
+
+Can we please talk about how to align all status lines first?
+
+   bye, Rocco
+-- 
+:<i>wq!
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000031.html">pager status_on_top fix
+</A></li>
+	<LI>Next message: <A HREF="000036.html">pager status_on_top fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#34">[ date ]</a>
+              <a href="thread.html#34">[ thread ]</a>
+              <a href="subject.html#34">[ subject ]</a>
+              <a href="author.html#34">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

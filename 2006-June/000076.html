@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Bug#374183: mutt-ng: Slow after imap reconnect
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Bug%23374183%3A%20mutt-ng%3A%20Slow%20after%20imap%20reconnect&In-Reply-To=%3C20060617180408.8793.37184.reportbug%40localhost%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000075.html">
+   <LINK REL="Next"  HREF="000077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Bug#374183: mutt-ng: Slow after imap reconnect</H1>
+    <B>Torsten Wolf</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Bug%23374183%3A%20mutt-ng%3A%20Slow%20after%20imap%20reconnect&In-Reply-To=%3C20060617180408.8793.37184.reportbug%40localhost%3E"
+       TITLE="Bug#374183: mutt-ng: Slow after imap reconnect">t.wolf at tu-bs.de
+       </A><BR>
+    <I>Sat Jun 17 20:04:08 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000075.html">[patch] phrasing suggestion
+</A></li>
+        <LI>Next message: <A HREF="000077.html">[PATCH] Mutt IMAP Namespace Buffer Overflow Vulnerability
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Package: mutt-ng
+Version: 0.0+20060429-1
+Severity: normal
+
+
+Starting mutt-ng, connecting to an imap server and browsing/reading mails 
+works just fine. As soon the connection breaks down and mutt-ng reconnects, 
+moving through the message index becomes painfully slow. It also seems that 
+this becomes slower each time it reconnects. Reading in the remote messages
+seems to work as quick as before. This happens with my configuration as
+well as with default values (~/.muttng removed).
+
+-- System Information:
+Debian Release: testing/unstable
+  APT prefers unstable
+  APT policy: (990, 'unstable'), (500, 'testing'), (500, 'stable'), (1, 'experimental')
+Architecture: i386 (i686)
+Shell:  /bin/sh linked to /bin/bash
+Kernel: Linux 2.6.16
+Locale: LANG=<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">de_DE at euro</A>, LC_CTYPE=<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">de_DE at euro</A> (charmap=ISO-8859-15)
+
+Versions of packages mutt-ng depends on:
+ii  libc6                   2.3.6-15         GNU C Library: Shared libraries
+ii  libgnutls13             1.3.5-1.1        the GNU TLS library - runtime libr
+ii  libgpg-error0           1.2-1            library for common error values an
+ii  libgpgme11              1.1.2-2          GPGME - GnuPG Made Easy
+ii  libidn11                0.5.18-2         GNU libidn library, implementation
+ii  libncursesw5            5.5-2            Shared libraries for terminal hand
+ii  libqdbm12               1.8.51-1         QDBM Database Libraries [runtime]
+ii  libsasl2                2.1.19.dfsg1-0.2 Authentication abstraction library
+ii  postfix [mail-transport 2.2.10-2         A high-performance mail transport 
+
+mutt-ng recommends no packages.
+
+-- no debconf information
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000075.html">[patch] phrasing suggestion
+</A></li>
+	<LI>Next message: <A HREF="000077.html">[PATCH] Mutt IMAP Namespace Buffer Overflow Vulnerability
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

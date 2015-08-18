@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Enable QDBM
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-December/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Enable%20QDBM&In-Reply-To=%3C20061203122623.GA2995%40aragorn.home.lxtec.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Enable QDBM</H1>
+    <B>Elimar Riesebieter</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Enable%20QDBM&In-Reply-To=%3C20061203122623.GA2995%40aragorn.home.lxtec.de%3E"
+       TITLE="Enable QDBM">riesebie at lxtec.de
+       </A><BR>
+    <I>Sun Dec  3 13:26:23 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000101.html">Enable QDBM
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I want to build a QDBM enabled version. I did:
+
+CPPFLAGS = -I/usr/include/qdbm \
+./configure
+...
+        --enable-hcache \
+        --without-gdbm \
+        --without-bdb
+
+The compile stops with:
+
+hcache.c: In function 'mutt_hcache_open':
+hcache.c:801: error: 'HeaderCachePageSize' undeclared (first use in this function)
+hcache.c:801: error: (Each undeclared identifier is reported only once
+hcache.c:801: error: for each function it appears in.)
+
+pdmef.atoi.diff does some changes to the HeaderCachePageSize
+definition....
+
+Elimar
+
+-- 
+  The path to source is always uphill!
+                                -unknown-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000101.html">Enable QDBM
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

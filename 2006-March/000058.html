@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> allow_ansi fix (2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20allow_ansi%20fix%20%282%29&In-Reply-To=%3C20060320000551.GA28509%40kos.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000057.html">
+   <LINK REL="Next"  HREF="000059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>allow_ansi fix (2)</H1>
+    <B>Konstantin Sobolev</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20allow_ansi%20fix%20%282%29&In-Reply-To=%3C20060320000551.GA28509%40kos.local%3E"
+       TITLE="allow_ansi fix (2)">kos at supportwizard.com
+       </A><BR>
+    <I>Mon Mar 20 01:05:51 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000057.html">SVN Repository Changes for 2006-03-14
+</A></li>
+        <LI>Next message: <A HREF="000059.html">SVN Repository Changes for 2006-03-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+On Fri, Feb 03, 2006 at 01:11:52AM +0300 I wrote:
+&gt;<i> Both mutt-1.5.11 and mutt-ng-20050814 (from Gentoo ebuild) don't 
+</I>&gt;<i> correctly work with allow_ansi option: codes &quot;[39m&quot; (set foreground to 
+</I>&gt;<i> defaut) and &quot;[49m&quot; (set background to default) ignore terminal settings 
+</I>&gt;<i> and always use white and black colors respecitvely. 
+</I>[skipped]
+
+as I can see this patch was incorporated into the latest code, may 
+thanks. However I've found another problem with ANSI colors handling: 
+when mutt spots &lt;ESC&gt;[0 it completely disables all colors, even if there 
+are more attributes following ';'. For example &lt;ESC&gt;[0;34m must result 
+in blue foreground color, but instead we get no colors at all.
+
+Here's my fix:
+
+--- pager.c.orig	2006-02-27 15:39:19.000000000 +0300
++++ pager.c	2006-03-20 02:53:10.448540904 +0300
+@@ -853,12 +853,8 @@
+         pos += 2;
+       }
+       else if (buf[pos] == '0' &amp;&amp; (pos + 1 == x || buf[pos + 1] == ';')) {
+-#ifdef HAVE_COLOR
+-        if (a-&gt;pair != -1)
+-          mutt_free_color (a-&gt;fg, a-&gt;bg);
+-#endif
+-        a-&gt;attr = ANSI_OFF;
+-        a-&gt;pair = -1;
++        a-&gt;bg = -2;
++        a-&gt;fg = -2;
+         pos += 2;
+       }
+       else if (buf[pos] == '3' &amp;&amp; isdigit (buf[pos + 1])) {
+
+BTW elinks CVS code has an option for --dump with ANSI colors, so now it 
+is possible to get colors in HTML mail.
+
+-- 
+/KoS
+* Those who trade freedom for security don't deserve either	      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000057.html">SVN Repository Changes for 2006-03-14
+</A></li>
+	<LI>Next message: <A HREF="000059.html">SVN Repository Changes for 2006-03-23
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

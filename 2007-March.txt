@@ -1,0 +1,30 @@
+From riesebie at lxtec.de  Sun Mar 18 19:10:33 2007
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 18 Mar 2007 19:10:33 +0100
+Subject: sidebar
+Message-ID: <20070318181033.GA16269@baumbart.home.lxtec.de>
+
+
+Hi all,
+
+I managed to get the sidebar patch working very well upon Christoph
+Berg's Debian mutt package. I had to disabled the maildir-mtime
+patch, 'cause the sidebar patch made it impossible to work with
+nfs shared maildirs. As well I enabled the indexcolor included in
+debian/patches/not-applied, added [0] and [1].
+
+The sidebar patch [2] is slightly changed to match Myon's patches.
+
+Is there no one interessted out there to apply sidebar upstream?
+
+Elimar
+
+[0} http://bereshit.synflood.at/svn/mutt-patches/trunk/patches/ak.sidebar-shortenname.diff
+[1] http://bereshit.synflood.at/svn/mutt-patches/trunk/patches/nion.sidebar-color.diff
+[2] http://lunar-linux.org/~tchan/mutt/patch-1.5.14.sidebar.20070223.txt
+
+-- 
+   On the keyboard of life you have always
+   to keep a finger at the escape key;-)
+
+

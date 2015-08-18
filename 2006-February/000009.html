@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> allow_ansi fix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20allow_ansi%20fix&In-Reply-To=%3C20060202221152.GA11080%40kos.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>allow_ansi fix</H1>
+    <B>Konstantin Sobolev</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20allow_ansi%20fix&In-Reply-To=%3C20060202221152.GA11080%40kos.local%3E"
+       TITLE="allow_ansi fix">kos at supportwizard.com
+       </A><BR>
+    <I>Thu Feb  2 23:11:52 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000017.html">allow_ansi fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+I'm not sure if I must post it here or in mutt ML, but since I'm using 
+mutt-ng I've decided to start here.
+
+Both mutt-1.5.11 and mutt-ng-20050814 (from Gentoo ebuild) don't 
+correctly work with allow_ansi option: codes &quot;[39m&quot; (set foreground to 
+defaut) and &quot;[49m&quot; (set background to default) ignore terminal settings 
+and always use white and black colors respecitvely. Also, if only 
+foreground color is set, background color stays initialized with 0 
+instead of default color. The same happens if only background color is 
+specified, foreground stays 0. It isn't noticable when using default 
+white-on-black terminal, but doesn't look too nice in a different color 
+scheme.
+
+Here's my attempt to fix the problem: 
+
+-- pager.c.orig        2006-02-03 00:14:29.183513904 +0300
++++ pager.c     2006-02-03 01:08:34.963355400 +0300
+@@ -823,6 +823,8 @@
+       a-&gt;attr = ANSI_OFF;
+       a-&gt;pair = -1;
+     }
++    a-&gt;bg = -2;
++    a-&gt;fg = -2;
+     while (pos &lt; x) {
+       if (buf[pos] == '1' &amp;&amp; (pos + 1 == x || buf[pos + 1] == ';')) {
+         a-&gt;attr |= ANSI_BOLD;
+@@ -856,7 +858,8 @@
+ #endif
+         a-&gt;pair = -1;
+         a-&gt;attr |= ANSI_COLOR;
+-        a-&gt;fg = buf[pos + 1] - '0';
++        if (buf[pos + 1] != '9')
++          a-&gt;fg = buf[pos + 1] - '0';
+         pos += 3;
+       }
+       else if (buf[pos] == '4' &amp;&amp; isdigit (buf[pos + 1])) {
+@@ -866,7 +869,8 @@
+ #endif
+         a-&gt;pair = -1;
+         a-&gt;attr |= ANSI_COLOR;
+-        a-&gt;bg = buf[pos + 1] - '0';
++        if (buf[pos + 1] != '9')
++          a-&gt;bg = buf[pos + 1] - '0';
+         pos += 3;
+       }
+       else {
+
+brief comments: fg and bg colors are initialized with -2 from the very
+beginning. -2 is COLOR_DEFAULT from color.c (should be probably moved to 
+color.h) When back- or foreground colorcode is spotted, we check if it 
+is an attempt to set a default color and change bg/fg value only when 
+needed.
+ 
+Here's sample screenshot before the patch:
+<A HREF="ftp://80.70.228.198/misc/mutt1.png">ftp://80.70.228.198/misc/mutt1.png</A>
+and after the patch:
+<A HREF="ftp://80.70.228.198/misc/mutt2.png">ftp://80.70.228.198/misc/mutt2.png</A>
+
+-- 
+/KoS
+* C is for Bangers.						      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000017.html">allow_ansi fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

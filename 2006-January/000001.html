@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> $muttng_folder_name is not folder-aware
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20%24muttng_folder_name%20is%20not%20folder-aware&In-Reply-To=%3C20060110150321.GA62436%40vision.anyware%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000000.html">
+   <LINK REL="Next"  HREF="000002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>$muttng_folder_name is not folder-aware</H1>
+    <B>Jean-Baptiste Quenot</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20%24muttng_folder_name%20is%20not%20folder-aware&In-Reply-To=%3C20060110150321.GA62436%40vision.anyware%3E"
+       TITLE="$muttng_folder_name is not folder-aware">jb.quenot at caraldi.com
+       </A><BR>
+    <I>Tue Jan 10 16:03:21 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000000.html">SVN Repository Changes for 2006-01-03
+</A></li>
+        <LI>Next message: <A HREF="000002.html">$muttng_folder_name is not folder-aware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I noticed in your blog the new $muttng_folder_name variable,
+thanks a lot for providing this long-awaited-killer mechanism.
+
+However, this variable is not folder-aware.  As the doc says:
+everything after the last &quot;/&quot;.  But I want: everything after the
+folder.
+
+My folder is:
+set folder=&quot;<A HREF="imap://mail.caraldi.com/mail">imap://mail.caraldi.com/mail</A>&quot;
+
+If I go to <A HREF="imap://mail.caraldi.com/mail/a/b,">imap://mail.caraldi.com/mail/a/b,</A> I want
+$muttng_folder_name to be a/b, not b.
+
+Attached patch solves this, it is against mutt-ng-20051110.
+Thanks in advance!
+-- 
+Jean-Baptiste Quenot
+<A HREF="http://caraldi.com/jbq/">http://caraldi.com/jbq/</A>
+-------------- next part --------------
+--- init.c.orig	Sun Oct  9 12:54:48 2005
++++ init.c	Tue Jan 10 15:43:12 2006
+@@ -279,9 +279,15 @@
+     val = CurrentFolder;
+   } else if (ascii_strcmp (&quot;muttng_folder_name&quot;, option-&gt;option) == 0 &amp;&amp;
+              CurrentFolder &amp;&amp; *CurrentFolder) {
+-    if ((t = strrchr (CurrentFolder, '/')) != NULL)
+-      val = t+1;
+-    else
++    int Maildirlength = str_len (Maildir);
++
++    if (Maildirlength &gt; 0 &amp;&amp; str_ncmp (CurrentFolder, Maildir, Maildirlength) ==
++        0 &amp;&amp; str_len (CurrentFolder) &gt; Maildirlength) {
++      val = CurrentFolder + Maildirlength;
++      if (Maildir[strlen(Maildir)-1]!='/') {
++        val += 1;
++      }
++    } else
+       val = CurrentFolder;
+   } else
+     val = option-&gt;init;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000000.html">SVN Repository Changes for 2006-01-03
+</A></li>
+	<LI>Next message: <A HREF="000002.html">$muttng_folder_name is not folder-aware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

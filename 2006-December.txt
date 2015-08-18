@@ -1,0 +1,113 @@
+From riesebie at lxtec.de  Sun Dec  3 13:26:23 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 3 Dec 2006 13:26:23 +0100
+Subject: Enable QDBM
+Message-ID: <20061203122623.GA2995@aragorn.home.lxtec.de>
+
+Hi all,
+
+I want to build a QDBM enabled version. I did:
+
+CPPFLAGS = -I/usr/include/qdbm \
+./configure
+...
+        --enable-hcache \
+        --without-gdbm \
+        --without-bdb
+
+The compile stops with:
+
+hcache.c: In function 'mutt_hcache_open':
+hcache.c:801: error: 'HeaderCachePageSize' undeclared (first use in this function)
+hcache.c:801: error: (Each undeclared identifier is reported only once
+hcache.c:801: error: for each function it appears in.)
+
+pdmef.atoi.diff does some changes to the HeaderCachePageSize
+definition....
+
+Elimar
+
+-- 
+  The path to source is always uphill!
+                                -unknown-
+
+
+From riesebie at lxtec.de  Sun Dec  3 14:11:04 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 3 Dec 2006 14:11:04 +0100
+Subject: Enable QDBM
+Message-ID: <20061203131103.GB3261@aragorn.home.lxtec.de>
+
+Hi all,
+
+I want to build a QDBM enabled version. I did:
+
+CPPFLAGS = -I/usr/include/qdbm \
+./configure
+...
+        --enable-hcache \
+        --without-gdbm \
+        --without-bdb
+
+The compile stops with:
+
+hcache.c: In function 'mutt_hcache_open':
+hcache.c:801: error: 'HeaderCachePageSize' undeclared (first use in this function)
+hcache.c:801: error: (Each undeclared identifier is reported only once
+hcache.c:801: error: for each function it appears in.)
+
+pdmef.atoi.diff does some changes to the HeaderCachePageSize
+definition....
+
+Elimar
+
+-- 
+  The path to source is always uphill!
+                                -unknown-
+
+
+From riesebie at lxtec.de  Sun Dec 10 23:21:36 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 10 Dec 2006 23:21:36 +0100
+Subject: Enable QDBM
+In-Reply-To: <20061203131103.GB3261@aragorn.home.lxtec.de>
+References: <20061203131103.GB3261@aragorn.home.lxtec.de>
+Message-ID: <20061210222136.GA7778@aragorn.home.lxtec.de>
+
+On Sun, 03 Dec 2006 the mental interface of
+Elimar Riesebieter told:
+
+> Hi all,
+> 
+> I want to build a QDBM enabled version. I did:
+
+As this is from http://bereshit.synflood.at/svn/mutt-patches/trunk/
+
+
+> CPPFLAGS = -I/usr/include/qdbm \
+> ./configure
+> ...
+>         --enable-hcache \
+>         --without-gdbm \
+>         --without-bdb
+> 
+> The compile stops with:
+> 
+> hcache.c: In function 'mutt_hcache_open':
+> hcache.c:801: error: 'HeaderCachePageSize' undeclared (first use in this function)
+> hcache.c:801: error: (Each undeclared identifier is reported only once
+> hcache.c:801: error: for each function it appears in.)
+> 
+> pdmef.atoi.diff does some changes to the HeaderCachePageSize
+> definition....
+
+Any suggestions?
+
+Elimar
+
+
+-- 
+  We all know Linux is great... it does infinite loops in 5 seconds.
+        -- Linus Torvalds
+
+

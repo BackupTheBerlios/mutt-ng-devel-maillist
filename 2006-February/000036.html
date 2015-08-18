@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> pager status_on_top fix
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20pager%20status_on_top%20fix&In-Reply-To=%3C20060226125624.GB18194%40soda.linbit%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000034.html">
+   <LINK REL="Next"  HREF="000037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>pager status_on_top fix</H1>
+    <B>Lars Ellenberg</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20pager%20status_on_top%20fix&In-Reply-To=%3C20060226125624.GB18194%40soda.linbit%3E"
+       TITLE="pager status_on_top fix">l.g.e at web.de
+       </A><BR>
+    <I>Sun Feb 26 13:56:48 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000034.html">pager status_on_top fix
+</A></li>
+        <LI>Next message: <A HREF="000037.html">pager status_on_top fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/ 2006-02-26 13:14:47 +0100
+\ Rocco Rutte:
+&gt;<i> * Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+</I>&gt;<i> &gt;Michael Kjorling reported in the other thread [sidbar scrolling fix]
+</I>&gt;<i> &gt;that:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt;..whenever I am in the pager, the message status line (which normally
+</I>&gt;<i> &gt;&gt;shows sender, subject and perhaps a few other things that I'm
+</I>&gt;<i> &gt;&gt;forgetting right now) is drawn, but blank. Toggling sidebar_visible
+</I>&gt;<i> &gt;&gt;doesn't seem to have any effect on this.
+</I>&gt;<i> 
+</I>&gt;<i> I still saw no screenshot... ;-(
+</I>
+help=no
+status_on_top=yes
+pager_index_lines=5
+
+
+---Mutt-ng: ~/tmp/tmp.mbx [Msgs:1 Post:1 3.8K]---(threads/last-date-received)---------------(all)---
+tmp.mbx 1|   1   C 060226 13:14 Rocco Rutte                    (  34) Re: pager status_on_top fix
+         |
+         |Date: Sun, 26 Feb 2006 13:14:47 +0100
+         |From: Rocco Rutte &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">pdmef at gmx.net</A>&gt;
+         |To: <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">mutt-ng-devel at lists.berlios.de</A>
+         |Cc: Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;
+         |Subject: Re: pager status_on_top fix
+         |Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">20060226121446.GF16719 at bolero.cs.tu-berlin.de</A>&gt;
+         |Mail-Followup-To: <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">mutt-ng-devel at lists.berlios.de</A>,
+         |        Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;
+         |User-Agent: mutt-ng/devel-r787 (SunOS)
+         |Status: RO
+         |
+         |* Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+         |&gt;Michael Kjorling reported in the other thread [sidbar scrolling fix]
+         |+&gt;that:
+         |
+         |&gt;&gt;..whenever I am in the pager, the message status line (which normally
+         |&gt;&gt;shows sender, subject and perhaps a few other things that I'm
+         |+&gt;&gt;forgetting right now) is drawn, but blank. Toggling sidebar_visible
+         |&gt;&gt;doesn't seem to have any effect on this.
+         |+
+         |I still saw no screenshot... ;-(
+         |+
+
+help=no
+status_on_top=no
+pager_index_lines=5
+
+tmp.mbx 1|   1   C 060226 13:14 Rocco Rutte                    (  34) Re: pager status_on_top fix
+         |---Mutt-ng: ~/tmp/tmp.mbx [Msgs:1 3.8K]---(threads/last-date-received)------------(all)---
+         |Date: Sun, 26 Feb 2006 13:14:47 +0100
+         |From: Rocco Rutte &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">pdmef at gmx.net</A>&gt;
+         |To: <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">mutt-ng-devel at lists.berlios.de</A>
+         |Cc: Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;
+         |Subject: Re: pager status_on_top fix
+         |Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">20060226121446.GF16719 at bolero.cs.tu-berlin.de</A>&gt;
+         |Mail-Followup-To: <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">mutt-ng-devel at lists.berlios.de</A>,
+         |        Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;
+         |User-Agent: mutt-ng/devel-r787 (SunOS)
+         |Status: RO
+         |
+         |* Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+         |&gt;Michael Kjorling reported in the other thread [sidbar scrolling fix]
+         |&gt;that:
+         |
+         |&gt;&gt;..whenever I am in the pager, the message status line (which normally
+         |&gt;&gt;shows sender, subject and perhaps a few other things that I'm
+         |&gt;&gt;forgetting right now) is drawn, but blank. Toggling sidebar_visible
+         |&gt;&gt;doesn't seem to have any effect on this.
+         |
+         |I still saw no screenshot... ;-(
+         |
+         |-  C- 1/1: Rocco Rutte            Re: pager status_on_top fix                    -- (48%)
+
+in the first screen shot, find the line where you think the
+&quot;-  C- 1/1: ... (48%)&quot; should be printed, and tell me it is not blank
+
+&gt;<i> The patch moves the pager status line right by $sidebar_width cells in
+</I>&gt;<i> the first screen line. But: from (0,0) to (0,$sidebar_width) the
+</I>&gt;<i> screen is left blank which looks ugly with colors.
+</I>
+no. it moves the pager status line from (0,0) (where it does not belong)
+to (statusoffset,SW) (where I think it does belong).
+    ^^^^^^^^^^^^
+
+(remember, some of us set pager_index_lines to values != 0)
+
+	Lars
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000034.html">pager status_on_top fix
+</A></li>
+	<LI>Next message: <A HREF="000037.html">pager status_on_top fix
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,21 @@
+From josh at tcbug.org  Mon Apr  9 00:11:31 2007
+From: josh at tcbug.org (Josh Paetzel)
+Date: Sun, 8 Apr 2007 17:11:31 -0500
+Subject: mutt-ng in the FreeBSD ports tree
+Message-ID: <20070408221131.GB8935@tcbug.org>
+
+I recently took over maintainership of the mutt-ng port in the 
+FreeBSD ports tree and I have a couple of questions.
+
+1) The last snapshot I could find is from November....has development 
+or snapshots stopped?
+
+2) The port is currently using a snapshot from September...would it 
+be of value to upgrade the port to use the latest snapshot?
+
+-- 
+Thanks,
+
+Josh Paetzel
+
+

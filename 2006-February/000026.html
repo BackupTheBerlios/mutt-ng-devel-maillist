@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> sidebar scrolling fixes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220182905.GA9867%40soda.linbit%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000024.html">
+   <LINK REL="Next"  HREF="000027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>sidebar scrolling fixes</H1>
+    <B>Lars Ellenberg</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220182905.GA9867%40soda.linbit%3E"
+       TITLE="sidebar scrolling fixes">l.g.e at web.de
+       </A><BR>
+    <I>Mon Feb 20 19:29:05 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000024.html">sidebar scrolling fixes
+</A></li>
+        <LI>Next message: <A HREF="000027.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/ 2006-02-20 16:29:43 +0100
+\ Rocco Rutte:
+&gt;<i> * Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt;anyways, just add one line there:
+</I>&gt;<i> 
+</I>&gt;<i> That didn't really work out completely, too. The fix I committed is
+</I>&gt;<i> mainly yours, though, so thanks a lot!
+</I>
+it still does not work :(
+e.g. when in the index (not pager).
+
+since this is not the first problem in sidebar scrolling, it seem
+difficult to get it right for all possible 8 modes.
+
+so here is a table which I hope is correct:
+
+menu == pager | status_on_top | help || first_line | last_line | lines
+           0  |      no       |  no  ||     0      | LINES-2   | LINES-2
+           0  |      no       | yes  ||     1      | LINES-2   | LINES-3
+           0  |     yes       |  no  ||     1      | LINES-1   | LINES-2
+           0  |     yes       | yes  ||     1      | LINES-2   | LINES-3
+------------------------------------------------------------------------
+           1  |      no       |  no  ||     0      | LINES-1   | LINES-1
+           1  |      no       | yes  ||     1      | LINES-1   | LINES-2
+           1  |     yes       |  no  ||     1      | LINES-1   | LINES-2
+           1  |     yes       | yes  ||     1      | LINES-2   | LINES-3
+------------------------------------------------------------------------
+
+since we now got the first_line and last_line right in sidebar_draw
+(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+
+cheers,
+	Lars
+
+Index: sidebar.c
+===================================================================
+--- sidebar.c	(revision 784)
++++ sidebar.c	(working copy)
+@@ -35,7 +35,10 @@
+ /* computes first entry to be shown */
+ void calc_boundaries (int menu)
+ {
+-  int lines = 0;
++  /* see sidebar_draw */
++  int lines = (LINES - 3)
++	  + !option (OPTHELP)
++	  + ((menu == MENU_PAGER) &amp;&amp; !option (OPTSTATUSONTOP));
+ 
+   if (list_empty(Incoming))
+     return;
+@@ -44,7 +47,6 @@
+   if (TopBuffy &lt; 0 || TopBuffy &gt;= Incoming-&gt;length)
+     TopBuffy = 0;
+ 
+-  lines = LINES - 2 - !option (OPTHELP);
+   known_lines = lines;
+   if (option (OPTSIDEBARNEWMAILONLY)) {
+     int i = CurBuffy;
+@@ -282,20 +284,30 @@
+  */
+ int sidebar_draw (int menu)
+ {
+-  int first_line = option (OPTSTATUSONTOP) ? 1 : option (OPTHELP) ? 1 : 0;
+-  int last_line = LINES-1;
++/*
++menu == pager | status_on_top | help || first_line | last_line | lines
++           0  |      no       |  no  ||     0      | LINES-2   | LINES-2
++           0  |      no       | yes  ||     1      | LINES-2   | LINES-3
++           0  |     yes       |  no  ||     1      | LINES-1   | LINES-2
++           0  |     yes       | yes  ||     1      | LINES-2   | LINES-3
++------------------------------------------------------------------------
++           1  |      no       |  no  ||     0      | LINES-1   | LINES-1
++           1  |      no       | yes  ||     1      | LINES-1   | LINES-2
++           1  |     yes       |  no  ||     1      | LINES-1   | LINES-2
++           1  |     yes       | yes  ||     1      | LINES-2   | LINES-3
++------------------------------------------------------------------------
++*/
++  int first_line = (option (OPTSTATUSONTOP) || option (OPTHELP));
++  int last_line = (LINES - 2)
++	  + ((menu == MENU_PAGER)
++	     ? (!option (OPTSTATUSONTOP) || !option (OPTHELP))
++	     : ( option (OPTSTATUSONTOP) &amp;&amp; !option (OPTHELP)));
+   int draw_devider = 1, i = 0;
+   int line;
+   BUFFY *tmp;
+   short delim_len = str_len (SidebarDelim);
+   char blank[SHORT_STRING];
+ 
+-  if (option (OPTSTATUSONTOP)) {
+-    last_line -= option (OPTHELP) ? 1 : 0;
+-  } else {
+-    last_line -= 1-(menu==MENU_PAGER);
+-  }
+-
+   /* initialize first time */
+   if (!initialized) {
+     prev_show_value = option (OPTMBOXPANE);
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000024.html">sidebar scrolling fixes
+</A></li>
+	<LI>Next message: <A HREF="000027.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

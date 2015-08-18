@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Mutt-ng devel-r782(based: No sleep with muttng
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Mutt-ng%20devel-r782%28based%3A%20No%20sleep%20with%20muttng&In-Reply-To=%3C20060215222733.GA394%40hvk.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000018.html">
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Mutt-ng devel-r782(based: No sleep with muttng</H1>
+    <B>Andre Berger</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Mutt-ng%20devel-r782%28based%3A%20No%20sleep%20with%20muttng&In-Reply-To=%3C20060215222733.GA394%40hvk.local%3E"
+       TITLE="Mutt-ng devel-r782(based: No sleep with muttng">andre.berger at web.de
+       </A><BR>
+    <I>Wed Feb 15 23:27:33 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000018.html">SVN Repository Changes for 2006-02-13
+</A></li>
+        <LI>Next message: <A HREF="000020.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Package: mutt-ng
+Version: devel-r782(based
+Severity: normal
+
+-- Please type your report below this line
+
+On my iBook G3 900 w/ Mac OS X 10.4.5, muttng will never allow the
+system to sleep unless compiled w/ --enable-buffy-size. Compiled with
+the latter, mailboxes that previously received new mail are listed as
+having new mail even though this is not true.
+
+In comparison, mutt 1.5.11 vvv-patch shows the mailbox behavior
+described above when compiled WITHOUT --enable-buffy-size, and there
+are no sleep problems at all.
+
+-Andre
+
+-- System Information
+System Version: Darwin hvk.local 8.5.0 Darwin Kernel Version 8.5.0: Sun Jan 22 10:38:46 PST 2006; root:xnu-792.6.61.obj~1/RELEASE_PPC Power Macintosh powerpc
+
+-- Build environment information
+
+(Note: This is the build environment installed on the system
+muttbug is run on.  Information may or may not match the environment
+used to build mutt.)
+
+- gcc version information
+gcc
+Using built-in specs.
+Target: powerpc-apple-darwin8
+Configured with: /private/var/tmp/gcc/gcc-5250.obj~12/src/configure --disable-checking -enable-werror --prefix=/usr --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-transform-name=/^[cg][^.-]*$/s/$/-4.0/ --with-gxx-include-dir=/include/c++/4.0.0 --build=powerpc-apple-darwin8 --host=powerpc-apple-darwin8 --target=powerpc-apple-darwin8
+Thread model: posix
+gcc version 4.0.1 (Apple Computer, Inc. build 5250)
+
+- CFLAGS
+-Wall -pedantic -Os
+
+-- Mutt-ng Version Information
+
+Mutt-ng devel-r782 (based on Mutt 1.5.11/2005-09-15)
+Copyright (C) 1996-2002 Michael R. Elkins and others.
+Mutt-ng comes with ABSOLUTELY NO WARRANTY; for details type `muttng -vv'.
+Mutt is free software, and you are welcome to redistribute it
+under certain conditions; type `muttng -vv' for details.
+
+System:
+  Darwin 8.5.0 (Power Macintosh)
+External Libraries:
+  ncurses 5.4
+  libiconv 1.10
+  gdbm GDBM version 1.8.3. 10/15/2002 (built Sep 24 2005 02:04:15)
+  OpenSSL 0.9.8 05 Jul 2005
+Compile Options:
+  -DEBUG
+  -HOMESPOOL  +USE_SETGID  +USE_DOTLOCK  +DL_STANDALONE  
+  +USE_FCNTL  -USE_FLOCK   +USE_INODESORT   +USE_HCACHE  
+  +USE_POP  +USE_NNTP  +USE_IMAP  +USE_GSS  +USE_SSL  -USE_GNUTLS  -USE_SASL  -USE_LIBESMTP  
+  +HAVE_REGCOMP  -USE_GNU_REGEX  -COMPRESSED  
+  +HAVE_COLOR  +HAVE_START_COLOR  +HAVE_TYPEAHEAD  +HAVE_BKGDSET  
+  +HAVE_CURS_SET  +HAVE_META  +HAVE_RESIZETERM  
+  +CRYPT_BACKEND_CLASSIC_PGP  +CRYPT_BACKEND_CLASSIC_SMIME  -CRYPT_BACKEND_GPGME  +BUFFY_SIZE -SUN_ATTACHMENT  
+  +ENABLE_NLS  -LOCALES_HACK  +HAVE_WC_FUNCS  +HAVE_LANGINFO_CODESET  +HAVE_LANGINFO_YESEXPR  
+  +HAVE_ICONV  -ICONV_NONTRANS  -HAVE_LIBIDN  +HAVE_GETSID  +HAVE_GETADDRINFO  
+Built-In Defaults:
+  -DOMAIN
+  -ISPELL
+  +SENDMAIL=&quot;/usr/sbin/sendmail&quot;
+  +MAILPATH=&quot;/var/mail&quot;
+  +PKGDATADIR=&quot;/usr/local/share/muttng&quot;
+  +PKGDOCDIR=&quot;/usr/local/share/doc/mutt&quot;
+  +SYSCONFDIR=&quot;/usr/local/etc&quot;
+  +EXECSHELL=&quot;/bin/sh&quot;
+  -MIXMASTER
+
+To contact the developers, please mail to &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">mutt-ng-devel at lists.berlios.de</A>&gt;.
+To visit the Mutt-ng homepage go to <A HREF="http://www.muttng.org.">http://www.muttng.org.</A>
+To report a bug, please use the fleang(1) utility.
+
+Mutt-ng is based on the following patches written for mutt:
+
+patch-1.5.6.cb.current_shortcut.2
+patch-1.5.6.tt.assumed_charset.1
+patch-1.5.6.tg.hcache.12
+patch-1.5.5.1.pdmef.short_mbox_name.1
+rr.compressed
+patch-1.5.4.fw.maildir_inode_sort
+patch-1.4.admcd.gnutls.59d
+patch-1.5.6i.sidebar.20041122
+patch-1.5.4.aw.listreply.1
+vvv.initials
+patch-1.5.5.1.cd.purge_message.3.4
+patch-1.5.5.1.cd.trash_folder.3.4
+patch-1.5.5.1.cd.edit_threads.9.5
+patch-1.5.4.cd.ifdef.1
+patch-1.5.4.cd.source_multiple.2
+vvv.quote
+vvv.nntp
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000018.html">SVN Repository Changes for 2006-02-13
+</A></li>
+	<LI>Next message: <A HREF="000020.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

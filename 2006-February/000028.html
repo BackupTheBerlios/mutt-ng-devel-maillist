@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> sidebar scrolling fixes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220215232.GB28159%40barkeeper1.linbit%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000027.html">
+   <LINK REL="Next"  HREF="000023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>sidebar scrolling fixes</H1>
+    <B>Lars Ellenberg</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220215232.GB28159%40barkeeper1.linbit%3E"
+       TITLE="sidebar scrolling fixes">l.g.e at web.de
+       </A><BR>
+    <I>Mon Feb 20 22:52:32 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000027.html">sidebar scrolling fixes
+</A></li>
+        <LI>Next message: <A HREF="000023.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/ 2006-02-20 20:42:59 +0100
+\ Rocco Rutte:
+&gt;<i> * Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;it still does not work :(
+</I>&gt;<i> &gt;e.g. when in the index (not pager).
+</I>&gt;<i> 
+</I>&gt;<i> r785 tries to fix one more issue, maybe the same?
+</I>
+most likely, yes.
+
+&gt;<i> &gt;since this is not the first problem in sidebar scrolling, it
+</I>&gt;<i> &gt;seem difficult to get it right for all possible 8 modes.
+</I>&gt;<i> 
+</I>&gt;<i> What I'm wondering all the time now may reduce the table size.
+</I>&gt;<i> With $status_on_top=false, why is that the status for the pager
+</I>&gt;<i> is the same width as the pager, i.e. the sidebar goes down to
+</I>&gt;<i> the message line? Or the other way round: when it makes sense to
+</I>&gt;<i> have the pager status as wide as the pager itself, doesn't it
+</I>&gt;<i> make sense for the index and other menus as well?
+</I>
+&gt;<i> Opinion?
+</I>
+everything that makes it easier is good.  I don't see a reason to
+make a difference between index and pager for this. would also
+avoid &quot;strange&quot; jumps in the sidebar display when you change from
+pager to index and back.
+
+&gt;<i> &gt;since we now got the first_line and last_line right in sidebar_draw
+</I>&gt;<i> &gt;(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+</I>&gt;<i> 
+</I>&gt;<i> Your patch is against 784 and I'll not commit it unless you still have
+</I>&gt;<i> trouble with r785.
+</I>
+seems like we have hacked at the same time, I obviously did svn up
+before I made that patch...
+
+&gt;<i> Reason: there alreasy is known_lines globally so calculating the
+</I>&gt;<i> lines again in calc_boundaries() isn't necessary.  Also, the
+</I>&gt;<i> diff from 784-785 stops re-calculating the boundary at every
+</I>&gt;<i> display update (...since the calculation is only needed upon
+</I>&gt;<i> sidebar moves).
+</I>
+indeed, I still have problems, though very obscure ones.
+but the same that I had when I tried to fix it in the same way
+(assign to known_lines directly).
+the problem is a little hard to reproduce, it takes several attempts,
+and I do not see the pattern yet.
+
+the problem is this:
+	go in the pager, scroll the sidebar randomly
+	go back in the index, scroll the sidebar
+	repeat.
+
+sometimes (every some 20th try or so) the sidebar part of the statusbar
+now gets overprinted by a unreachable folder name. once it happens,
+it happens repeatedly with different folder names. the statusbar itself
+won't be redrawn because it does not suspect it has been damaged.
+it seem to depend on the exact position in the sidebar befor going
+to pager mode the first time (???)
+
+this did not occur with my patch (not yet, maybe).
+if I hit this again and happen to be more awake than just now,
+I'll try to track it down to something more specific...
+
+	Lars
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000027.html">sidebar scrolling fixes
+</A></li>
+	<LI>Next message: <A HREF="000023.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

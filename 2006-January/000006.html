@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> SVN Repository Changes for 2006-01-19
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-01-19&In-Reply-To=%3C43D018C9.mailEPA1171YZ%40cs.tu-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   <LINK REL="Next"  HREF="000007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>SVN Repository Changes for 2006-01-19</H1>
+    <B>Rocco Rutte</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-01-19&In-Reply-To=%3C43D018C9.mailEPA1171YZ%40cs.tu-berlin.de%3E"
+       TITLE="SVN Repository Changes for 2006-01-19">pdmef at cs.tu-berlin.de
+       </A><BR>
+    <I>Thu Jan 19 23:55:05 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">Mugg-ng rewrite not compiling under cygwin.
+</A></li>
+        <LI>Next message: <A HREF="000007.html">Long running bugs in pgp implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-01-19.
+
+2006-01-19  10:35:18 +0100  Latest Revision: 776
+
+    Rocco Rutte &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">pdmef at cs.tu-berlin.de</A>&gt; (pdmef):
+        - rewrite: re-organize code in core/ (namely buffer implementation)
+          (r775)
+        - rewrite: properly license-tag all files (r776)
+
+    Modified Files:
+        - branches/muttng-rewrite/src/libmuttng/mailbox/mbox_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/util/url.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/sys_option.h,
+          branches/muttng-rewrite/src/libmuttng/message/mailbox_header.h,
+          branches/muttng-rewrite/src/core/list.c,
+          branches/muttng-rewrite/src/libmuttng/libmuttng.h,
+          branches/muttng-rewrite/src/muttng/tools/muttng_tool.h,
+          branches/muttng-rewrite/src/core/intl.h,
+          branches/muttng-rewrite/src/core/test/rx_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/transport/tls_connection.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/signal_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/option.h,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_pgp.h,
+          branches/muttng-rewrite/src/muttng/ui/ui_text.h,
+          branches/muttng-rewrite/src/core/rx.h,
+          branches/muttng-rewrite/src/core/buffer_token.h,
+          branches/muttng-rewrite/src/core/test/test.cpp,
+          branches/muttng-rewrite/src/libmuttng/muttng_signal.h,
+          branches/muttng-rewrite/doc/GNUmakefile,
+          branches/muttng-rewrite/src/core/test/buffer_tests.cpp,
+          branches/muttng-rewrite/src/muttng/ui/ui_curses.cpp,
+          branches/muttng-rewrite/src/muttng/tools/sync_tool.cpp,
+          branches/muttng-rewrite/src/muttng/tools/query_tool.cpp,
+          branches/muttng-rewrite/src/core/test/list_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/message/body.h,
+          branches/muttng-rewrite/src/libmuttng/config/bool_option.h,
+          branches/muttng-rewrite/src/libmuttng/cache/cache.cpp,
+          branches/muttng-rewrite/src/core/io.c,
+          branches/muttng-rewrite/src/core/buffer_base64.c,
+          branches/muttng-rewrite/src/libmuttng/mailbox/imap_mailbox.cpp,
+          branches/muttng-rewrite/doc/manual_de/manual-full.xml,
+          branches/muttng-rewrite/src/libmuttng/debug.cpp,
+          branches/muttng-rewrite/src/libmuttng/crypto/crypto.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mmdf_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_pgp.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/quad_option.cpp,
+          branches/muttng-rewrite/src/core/buffer.h,
+          branches/muttng-rewrite/src/libmuttng/config/syn_option.cpp,
+          branches/muttng-rewrite/src/core/net.h,
+          branches/muttng-rewrite/src/libmuttng/message/subject_header.h,
+          branches/muttng-rewrite/src/libmuttng/message/simple_header.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/url_option.h,
+          branches/muttng-rewrite/src/muttng/tools/conf_tool.cpp,
+          branches/muttng-rewrite/src/core/exit.c,
+          branches/muttng-rewrite/src/related/manual.h,
+          branches/muttng-rewrite/src/muttng/ui/ui_text.cpp,
+          branches/muttng-rewrite/src/core/rx_posix.c,
+          branches/muttng-rewrite/doc/examples/libmuttng_mailbox_create.cpp,
+          branches/muttng-rewrite/src/core/test/conv_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/util/hash.h,
+          branches/muttng-rewrite/src/libmuttng/util/rfc2047.h,
+          branches/muttng-rewrite/src/libmuttng/cache/cache_qdbm.h,
+          branches/muttng-rewrite/src/core/list.h,
+          branches/muttng-rewrite/doc/examples/libmuttng_hash.cpp,
+          branches/muttng-rewrite/src/libmuttng/transport/plain_connection.h,
+          branches/muttng-rewrite/src/muttng/tools/sync_tool.h,
+          branches/muttng-rewrite/src/core/GNUmakefile,
+          branches/muttng-rewrite/src/libmuttng/debug.h,
+          branches/muttng-rewrite/src/libmuttng/cache/cache.h,
+          branches/muttng-rewrite/src/libmuttng/config/config_manager.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/int_option.cpp,
+          branches/muttng-rewrite/src/muttng/config/global_variables.h,
+          branches/muttng-rewrite/src/core/test/net_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/pop3_mailbox.h,
+          branches/muttng-rewrite/src/core/test/list_tests.h,
+          branches/muttng-rewrite/src/core/test/base64_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/message/simple_header.h,
+          branches/muttng-rewrite/src/libmuttng/test/header_tests.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mailbox.h,
+          branches/muttng-rewrite/doc/manual_en/manual-full.xml,
+          branches/muttng-rewrite/src/core/net.c,
+          branches/muttng-rewrite/doc/manual_de/manual-user.xml,
+          branches/muttng-rewrite/src/libmuttng/test/lib_tests.cpp,
+          branches/muttng-rewrite/src/core/test/qp_tests.h,
+          branches/muttng-rewrite/src/libmuttng/message/header.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/string_option.h,
+          branches/muttng-rewrite/src/libmuttng/transport/plain_connection.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mh_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/imap_mailbox.h,
+          branches/muttng-rewrite/src/libmuttng/config/bool_option.cpp,
+          branches/muttng-rewrite/src/core/buffer_format.c,
+          branches/muttng-rewrite/src/muttng/ui/ui.h,
+          branches/muttng-rewrite/src/libmuttng/config/sys_option.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/remote_mailbox.cpp,
+          branches/muttng-rewrite/doc/common/manual-user.xml,
+          branches/muttng-rewrite/src/libmuttng/test/lib_tests.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/dir_mailbox.h,
+          branches/muttng-rewrite/src/core/mem.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/nntp_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/maildir_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/local_mailbox.h,
+          branches/muttng-rewrite/src/core/version.h,
+          branches/muttng-rewrite/src/core/sigs.h,
+          branches/muttng-rewrite/src/libmuttng/libmuttng.cpp,
+          branches/muttng-rewrite/src/muttng/tools/tool.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/dir_mailbox.cpp,
+          branches/muttng-rewrite/src/core/conv.c,
+          branches/muttng-rewrite/src/libmuttng/mailbox/maildir_mailbox.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/util/url.h,
+          branches/muttng-rewrite/src/libmuttng/transport/connection.h,
+          branches/muttng-rewrite/contrib/html_head_number.pl,
+          branches/muttng-rewrite/src/libmuttng/transport/tls_connection.h,
+          branches/muttng-rewrite/src/libmuttng/version.h,
+          branches/muttng-rewrite/src/libmuttng/message/subject_header.cpp,
+          branches/muttng-rewrite/src/libmuttng/message/mailbox_header.cpp,
+          branches/muttng-rewrite/src/core/buffer_qp.c,
+          branches/muttng-rewrite/src/core/test/io_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/file_mailbox.h,
+          branches/muttng-rewrite/src/core/intl.c,
+          branches/muttng-rewrite/src/core/sigs.c,
+          branches/muttng-rewrite/src/libmuttng/mailbox/file_mailbox.cpp,
+          branches/muttng-rewrite/src/core/buffer_base.c,
+          branches/muttng-rewrite/src/libmuttng/config/option.cpp,
+          branches/muttng-rewrite/doc/examples/libmuttng_url.cpp,
+          branches/muttng-rewrite/src/core/buffer_format.h,
+          branches/muttng-rewrite/src/core/test/io_tests.h,
+          branches/muttng-rewrite/src/libmuttng/config/url_option.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/url_tests.cpp,
+          branches/muttng-rewrite/src/core/buffer_base.h,
+          branches/muttng-rewrite/src/libmuttng/crypto/crypto_gpgme.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/rfc2047_tests.h,
+          branches/muttng-rewrite/doc/examples/core_hash.c,
+          branches/muttng-rewrite/src/muttng/tools/main.cpp,
+          branches/muttng-rewrite/src/muttng/tools/mailx_tool.h,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_smime.cpp,
+          branches/muttng-rewrite/src/core/rx_pcre.c,
+          branches/muttng-rewrite/src/muttng/tools/tool.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/syn_option.h,
+          branches/muttng-rewrite/src/libmuttng/message/header.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/remote_mailbox.h,
+          branches/muttng-rewrite/src/libmuttng/config/rx_option.cpp,
+          branches/muttng-rewrite/src/muttng/ui/ui_curses.h,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_smime.h,
+          branches/muttng-rewrite/doc/examples/core_buffer_format2.c,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mh_mailbox.h,
+          branches/muttng-rewrite/src/muttng/muttng.h,
+          branches/muttng-rewrite/src/core/command.h,
+          branches/muttng-rewrite/src/core/test/net_tests.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mbox_mailbox.h,
+          branches/muttng-rewrite/src/core/command.c,
+          branches/muttng-rewrite/src/core/test/hash_tests.h,
+          branches/muttng-rewrite/src/core/core.c,
+          branches/muttng-rewrite/doc/manual_de/intro.xml,
+          branches/muttng-rewrite/src/libmuttng/message/message.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/rx_option.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/local_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/message/message.h,
+          branches/muttng-rewrite/src/core/test/rx_tests.h,
+          branches/muttng-rewrite/src/core/array.h,
+          branches/muttng-rewrite/src/muttng/config/config.h,
+          branches/muttng-rewrite/src/muttng/tools/conf_tool.h,
+          branches/muttng-rewrite/src/libmuttng/config/int_option.h,
+          branches/muttng-rewrite/src/libmuttng/transport/ssl_connection.h,
+          branches/muttng-rewrite/src/libmuttng/test/conn_tests.h,
+          branches/muttng-rewrite/src/muttng/ui/ui.cpp,
+          branches/muttng-rewrite/src/core/buffer_base64.h,
+          branches/muttng-rewrite/src/libmuttng/signal.pl,
+          branches/muttng-rewrite/src/core/test/qp_tests.cpp,
+          branches/muttng-rewrite/src/core/str.c,
+          branches/muttng-rewrite/src/libmuttng/message/body.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/pop3_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_crypto.h,
+          branches/muttng-rewrite/src/core/test/conv_tests.h,
+          branches/muttng-rewrite/src/muttng/ui/ui_plain.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/header_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/nntp_mailbox.h,
+          branches/muttng-rewrite/src/libmuttng/crypto/classic_crypto.cpp,
+          branches/muttng-rewrite/src/core/test/buffer_tests.h,
+          branches/muttng-rewrite/doc/manual_en/intro.xml,
+          branches/muttng-rewrite/src/libmuttng/mailbox/mmdf_mailbox.h,
+          branches/muttng-rewrite/src/core/buffer_token.c,
+          branches/muttng-rewrite/src/libmuttng/crypto/crypto_gpgme.h,
+          branches/muttng-rewrite/src/muttng/muttng.cpp,
+          branches/muttng-rewrite/src/core/core.h,
+          branches/muttng-rewrite/src/libmuttng/config/string_option.cpp,
+          branches/muttng-rewrite/src/muttng/ui/ui_plain.h,
+          branches/muttng-rewrite/src/libmuttng/config/quad_option.h,
+          branches/muttng-rewrite/doc/common/manual-full.xml,
+          branches/muttng-rewrite/src/core/test/base64_tests.h,
+          branches/muttng-rewrite/doc/examples/libmuttng_signal.cpp,
+          branches/muttng-rewrite/src/libmuttng/transport/connection.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/signal_tests.h,
+          branches/muttng-rewrite/src/core/hash.c,
+          branches/muttng-rewrite/src/libmuttng/test/conn_tests.cpp,
+          branches/muttng-rewrite/src/muttng/event/event.h,
+          branches/muttng-rewrite/src/libmuttng/util/rfc2047.cpp,
+          branches/muttng-rewrite/src/libmuttng/transport/ssl_connection.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/test.cpp,
+          branches/muttng-rewrite/src/core/hash.h,
+          branches/muttng-rewrite/src/libmuttng/cache/cache_qdbm.cpp,
+          branches/muttng-rewrite/src/core/io.h,
+          branches/muttng-rewrite/src/muttng/tools/muttng_tool.cpp,
+          branches/muttng-rewrite/src/libmuttng/crypto/crypto.h,
+          branches/muttng-rewrite/src/core/mem.c,
+          branches/muttng-rewrite/src/muttng/tools/mailx_tool.cpp,
+          branches/muttng-rewrite/src/libmuttng/test/url_tests.h,
+          branches/muttng-rewrite/src/muttng/tools/query_tool.h,
+          branches/muttng-rewrite/src/libmuttng/test/rfc2047_tests.cpp,
+          branches/muttng-rewrite/src/core/test/hash_tests.cpp,
+          branches/muttng-rewrite/src/core/str.h,
+          branches/muttng-rewrite/doc/examples/core_buffer_format.c,
+          branches/muttng-rewrite/src/libmuttng/config/config_manager.h,
+          branches/muttng-rewrite/src/muttng/config/config.cpp,
+          branches/muttng-rewrite/src/core/conv.h,
+          branches/muttng-rewrite/src/core/exit.h,
+          branches/muttng-rewrite/doc/manual_en/manual-user.xml,
+          branches/muttng-rewrite/src/core/buffer_qp.h
+
+    Added Files:
+        - branches/muttng-rewrite/LGPL,
+          branches/muttng-rewrite/src/core/buffer_base.c (from
+          /branches/muttng-rewrite/src/core/buffer.c:774),
+          branches/muttng-rewrite/doc/manual_de/licensing.xml,
+          branches/muttng-rewrite/doc/manual_en/licensing.xml,
+          branches/muttng-rewrite/contrib/licensing.pl,
+          branches/muttng-rewrite/src/core/buffer_base64.h (from
+          /branches/muttng-rewrite/src/core/base64.h:774),
+          branches/muttng-rewrite/src/core/buffer_format.c (from
+          /branches/muttng-rewrite/src/core/buffer.c:774),
+          branches/muttng-rewrite/src/core/buffer_base64.c (from
+          /branches/muttng-rewrite/src/core/base64.c:774),
+          branches/muttng-rewrite/src/core/buffer_base.h (from
+          /branches/muttng-rewrite/src/core/buffer.h:774),
+          branches/muttng-rewrite/src/core/buffer_token.c (from
+          /branches/muttng-rewrite/src/core/buffer.c:774),
+          branches/muttng-rewrite/src/core/buffer_token.h (from
+          /branches/muttng-rewrite/src/core/buffer.h:774),
+          branches/muttng-rewrite/src/core/buffer_qp.c (from
+          /branches/muttng-rewrite/src/core/qp.c:774),
+          branches/muttng-rewrite/doc/common/licensing.xml,
+          branches/muttng-rewrite/src/core/buffer_format.h (from
+          /branches/muttng-rewrite/src/core/buffer.h:774),
+          branches/muttng-rewrite/src/core/buffer_qp.h (from
+          /branches/muttng-rewrite/src/core/qp.h:774)
+
+    Deleted Files:
+        - branches/muttng-rewrite/src/core/qp.h,
+          branches/muttng-rewrite/src/core/buffer.c,
+          branches/muttng-rewrite/src/core/base64.h,
+          branches/muttng-rewrite/src/core/base64.c,
+          branches/muttng-rewrite/src/core/qp.c
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">Mugg-ng rewrite not compiling under cygwin.
+</A></li>
+	<LI>Next message: <A HREF="000007.html">Long running bugs in pgp implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

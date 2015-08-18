@@ -1,0 +1,482 @@
+From frederik at a5.repetae.net  Sat Jun 10 22:02:11 2006
+From: frederik at a5.repetae.net (Frederik Eaton)
+Date: Sat, 10 Jun 2006 21:02:11 +0100
+Subject: [patch] phrasing suggestion
+Message-ID: <20060610200211.GA12878@a5.repetae.net>
+
+Hi,
+
+I sent this patch to the mutt-dev list a while ago and it was not
+applied. I may have sent it to mutt-ng-devel as well but I wasn't
+subscribed and I can't find it in the archives. Apologies if this is a
+duplicate.
+
+What happened was, there was some discussion about the patch on the
+mutt-dev list, which resulted in everybody agreeing it was the right
+thing to do; but Brendan Cully refused to apply it.
+
+The response that I got out of him, after 8 months, was:
+
+> Seems harmless enough, but would imply that $postponed should be
+> renamed as well. I'm afraid doing that would cause negative reactions
+> in the silent majority. In short this patch doesn't really seem worth
+> the trouble to me...
+
+I am not proposing to change the name of a variable. I don't think
+that $postponed should be renamed. That would be dumb. I just think
+the message should be changed so it is less confusing. Currently, most
+new users lose at least one mail out of confusion, the first time that
+message comes up. Such pain is completely unnecessary.
+
+Frederik
+
+----- Forwarded message from Frederik Eaton <frederik at a5.repetae.net> -----
+
+From: Frederik Eaton <frederik at a5.repetae.net>
+Subject: [patch] Re: phrasing suggestion
+To: mutt-dev at mutt.org
+Cc: hjp+mutt at wsr.ac.at, topeju at badzilla.net, muttdev at discworld.dyndns.org
+Date: Tue, 25 Jan 2005 09:21:03 -0800
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.64
+X-Spam-Level: 
+User-Agent: Mutt/1.5.6+20040907i
+
+(I've been trying to send this (very simple) patch to the list, but it
+hasn't been getting through - am I doing something wrong?)
+
+I think we can agree that "cancel" doesn't need to be explicitly
+listed as an option in the prompt (although perhaps ^g could be
+mentioned more prominently in the user's manual, since I and some
+other people here didn't know about it).
+
+So far my favorite suggestion has been Charles Cazabon's "Save draft
+message before quitting?".
+
+I'd like to shorten it to "Save draft message?" though, since "before
+quitting" is slightly redundant, and might lead the user to think he
+is quitting mutt itself.
+
+If this is OK with everyone, here's a patch...
+
+Frederik
+
+
+diff -dur -x Entries mutt-cvs/compose.c mutt-cvs-with-save-draft-message/compose.c
+--- mutt-cvs/compose.c	2004-12-07 11:50:04.000000000 -0800
++++ mutt-cvs-with-save-draft-message/compose.c	2005-01-17 19:50:57.000000000 -0800
+@@ -1132,7 +1132,7 @@
+ 	break;
+ 
+       case OP_EXIT:
+-	if ((i = query_quadoption (OPT_POSTPONE, _("Postpone this message?"))) == M_NO)
++	if ((i = query_quadoption (OPT_POSTPONE, _("Save draft message?"))) == M_NO)
+ 	{
+ 	  while (idxlen-- > 0)
+ 	  {
+diff -dur -x Entries mutt-cvs/po/bg.po mutt-cvs-with-save-draft-message/po/bg.po
+--- mutt-cvs/po/bg.po	2004-02-01 10:26:11.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/bg.po	2005-01-17 19:51:07.000000000 -0800
+@@ -712,7 +712,7 @@
+ msgstr "?????? ??? ????????? ?? ????????????"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "??????? ?? ?? ???????? ??????????"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/ca.po mutt-cvs-with-save-draft-message/po/ca.po
+--- mutt-cvs/po/ca.po	2005-01-14 23:43:29.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/ca.po	2005-01-17 19:51:07.000000000 -0800
+@@ -728,7 +728,7 @@
+ msgstr "El que ocorre ac? ?s que no s'ha pogut adjuntar un fitxer."
+ 
+ #: compose.c:1099
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Voleu posposar aquest missatge?"
+ 
+ #: compose.c:1156
+diff -dur -x Entries mutt-cvs/po/cs.po mutt-cvs-with-save-draft-message/po/cs.po
+--- mutt-cvs/po/cs.po	2005-01-15 09:45:01.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/cs.po	2005-01-17 19:51:07.000000000 -0800
+@@ -819,7 +819,7 @@
+ 
+ #
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Odlo?it tuto zpr?vu?"
+ 
+ #
+diff -dur -x Entries mutt-cvs/po/da.po mutt-cvs-with-save-draft-message/po/da.po
+--- mutt-cvs/po/da.po	2004-04-12 14:19:28.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/da.po	2005-01-17 19:51:07.000000000 -0800
+@@ -713,7 +713,7 @@
+ msgstr "Det er ikke muligt at lave et bilag."
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Uds?t afsendelse af dette brev?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/de.po mutt-cvs-with-save-draft-message/po/de.po
+--- mutt-cvs/po/de.po	2005-01-14 23:43:29.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/de.po	2005-01-17 19:51:08.000000000 -0800
+@@ -682,7 +682,7 @@
+ msgstr "Anhang kann nicht erzeugt werden."
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Nachricht zur?ckstellen?"
+ 
+ #: compose.c:1159
+diff -dur -x Entries mutt-cvs/po/el.po mutt-cvs-with-save-draft-message/po/el.po
+--- mutt-cvs/po/el.po	2004-04-12 14:19:28.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/el.po	2005-01-17 19:51:08.000000000 -0800
+@@ -862,7 +862,7 @@
+ 
+ #
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "?? ????????? ? ??????????? ????? ??? ?????????;"
+ 
+ #
+diff -dur -x Entries mutt-cvs/po/eo.po mutt-cvs-with-save-draft-message/po/eo.po
+--- mutt-cvs/po/eo.po	2004-04-12 14:19:28.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/eo.po	2005-01-17 19:51:08.000000000 -0800
+@@ -707,7 +707,7 @@
+ msgstr "Oni malsukcesis krei kunsenda?on"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "?u prokrasti ?i tiun mesa?on?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/es.po mutt-cvs-with-save-draft-message/po/es.po
+--- mutt-cvs/po/es.po	2004-04-12 14:19:28.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/es.po	2005-01-17 19:51:08.000000000 -0800
+@@ -713,7 +713,7 @@
+ msgstr "Lo que tenemos aqu? es un fallo al producir el archivo a adjuntar"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "?Posponer el mensaje?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/et.po mutt-cvs-with-save-draft-message/po/et.po
+--- mutt-cvs/po/et.po	2004-04-12 14:19:28.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/et.po	2005-01-17 19:51:08.000000000 -0800
+@@ -705,7 +705,7 @@
+ msgstr "See mis siin n??d on, on viga lisa loomisel"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Panen teate postitusootele?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/fr.po mutt-cvs-with-save-draft-message/po/fr.po
+--- mutt-cvs/po/fr.po	2004-08-17 08:22:25.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/fr.po	2005-01-17 19:51:09.000000000 -0800
+@@ -718,7 +718,7 @@
+ msgstr "Nous sommes en pr?sence d'un ?chec de fabrication d'un attachement"
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Ajourner ce message ?"
+ 
+ #: compose.c:1159
+diff -dur -x Entries mutt-cvs/po/gl.po mutt-cvs-with-save-draft-message/po/gl.po
+--- mutt-cvs/po/gl.po	2004-04-12 14:19:29.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/gl.po	2005-01-17 19:51:09.000000000 -0800
+@@ -715,7 +715,7 @@
+ msgstr "O que temos aqu? ? un fallo ? face-lo adxunto"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "?Posp?r esta mensaxe?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/hu.po mutt-cvs-with-save-draft-message/po/hu.po
+--- mutt-cvs/po/hu.po	2004-04-12 14:19:29.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/hu.po	2005-01-17 19:51:09.000000000 -0800
+@@ -707,7 +707,7 @@
+ msgstr "Hiba a mell?klet csatol?sakor"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Eltegy?k a levelet k?s?bbre?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/id.po mutt-cvs-with-save-draft-message/po/id.po
+--- mutt-cvs/po/id.po	2004-08-17 08:25:31.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/id.po	2005-01-17 19:51:09.000000000 -0800
+@@ -689,7 +689,7 @@
+ msgstr "Gagal membuat lampiran, nih..."
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Tunda surat ini?"
+ 
+ #: compose.c:1159
+diff -dur -x Entries mutt-cvs/po/it.po mutt-cvs-with-save-draft-message/po/it.po
+--- mutt-cvs/po/it.po	2005-01-14 23:43:29.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/it.po	2005-01-17 19:51:09.000000000 -0800
+@@ -711,7 +711,7 @@
+ msgstr "Quel che abbiamo qui ? l'impossibilit? di fare un allegato"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Rimando a dopo questo messaggio?"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/ja.po mutt-cvs-with-save-draft-message/po/ja.po
+--- mutt-cvs/po/ja.po	2004-08-30 12:47:47.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/ja.po	2005-01-17 19:51:10.000000000 -0800
+@@ -686,7 +686,7 @@
+ msgstr "??????????????????????????????????????????????"
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "???????????????????????????????"
+ 
+ #: compose.c:1159
+diff -dur -x Entries mutt-cvs/po/ko.po mutt-cvs-with-save-draft-message/po/ko.po
+--- mutt-cvs/po/ko.po	2004-04-12 14:19:29.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/ko.po	2005-01-17 19:51:10.000000000 -0800
+@@ -703,7 +703,7 @@
+ msgstr "?????? ???? ?????? ???? ???????? ?????? ??????????."
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "?? ?????? ?????? ?????????"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/lt.po mutt-cvs-with-save-draft-message/po/lt.po
+--- mutt-cvs/po/lt.po	2004-04-12 14:19:29.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/lt.po	2005-01-17 19:51:10.000000000 -0800
+@@ -717,7 +717,7 @@
+ msgstr "?ia tur?t? b?ti priedas, ta?iau jo nepavyko padaryti"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Atid?ti ?? lai?k??"
+ 
+ #: compose.c:1293
+diff -dur -x Entries mutt-cvs/po/nl.po mutt-cvs-with-save-draft-message/po/nl.po
+--- mutt-cvs/po/nl.po	2004-08-17 09:06:48.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/nl.po	2005-01-17 19:51:10.000000000 -0800
+@@ -741,7 +741,7 @@
+ msgstr "Het lukt niet helemaal met dat toevoegen. Het blijft moeilijk.."
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Bericht uitstellen?"
+ 
+ #: compose.c:1159
+diff -dur -x Entries mutt-cvs/po/pl.po mutt-cvs-with-save-draft-message/po/pl.po
+--- mutt-cvs/po/pl.po	2004-08-16 14:33:35.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/pl.po	2005-01-17 19:51:10.000000000 -0800
+@@ -680,7 +680,7 @@
+ msgstr "Mamy tu b??d tworzenia za??cznika"
+ 
+ #: compose.c:1099
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Zachowa? ten list do p??niejszej obr?bki i ewentualnej wysy?ki?"
+ 
+ #: compose.c:1156
+diff -dur -x Entries mutt-cvs/po/pt_BR.po mutt-cvs-with-save-draft-message/po/pt_BR.po
+--- mutt-cvs/po/pt_BR.po	2004-04-12 14:19:30.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/pt_BR.po	2005-01-17 19:51:11.000000000 -0800
+@@ -719,7 +719,7 @@
+ msgstr "O que temos aqui ? uma falha ao criar um anexo"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Adiar esta mensagem?"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/ru.po mutt-cvs-with-save-draft-message/po/ru.po
+--- mutt-cvs/po/ru.po	2004-04-12 14:19:30.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/ru.po	2005-01-17 19:51:11.000000000 -0800
+@@ -712,7 +712,7 @@
+ msgstr "?? ??????? ??????? ????????"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "???????? ??? ??????????"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/sk.po mutt-cvs-with-save-draft-message/po/sk.po
+--- mutt-cvs/po/sk.po	2004-04-12 14:19:30.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/sk.po	2005-01-17 19:51:11.000000000 -0800
+@@ -726,7 +726,7 @@
+ msgstr "Nemo?no vytvori? pripojen? d?ta"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Odlo?i? t?to spr?vu?"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/sv.po mutt-cvs-with-save-draft-message/po/sv.po
+--- mutt-cvs/po/sv.po	2005-01-14 23:43:30.000000000 -0800
++++ mutt-cvs-with-save-draft-message/po/sv.po	2005-01-17 19:51:11.000000000 -0800
+@@ -686,7 +686,7 @@
+ msgstr "Vad vi har h?r ?r ett misslyckande att skapa en bilaga."
+ 
+ #: compose.c:1102
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Skjut upp det h?r meddelandet?"
+ 
+ #: compose.c:1159
+
+diff -dur -x Entries mutt-cvs/po/tr.po mutt-cvs-with-save-draft-message/po/tr.po
+--- mutt-cvs/po/tr.po	2004-04-12 14:19:30.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/tr.po	2005-01-17 19:51:11.000000000 -0800
+@@ -716,7 +716,7 @@
+ msgstr "Eklenti yaparak burada bir hata olu?tu"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "Iletiyi kaydediyem mi?"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/uk.po mutt-cvs-with-save-draft-message/po/uk.po
+--- mutt-cvs/po/uk.po	2004-04-12 14:19:31.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/uk.po	2005-01-17 19:51:12.000000000 -0800
+@@ -706,7 +706,7 @@
+ msgstr "?? ?????? ???????? ???????"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "???????? ???? ?? ?????????? ??????????? ?? ??????????"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/zh_CN.po mutt-cvs-with-save-draft-message/po/zh_CN.po
+--- mutt-cvs/po/zh_CN.po	2004-04-12 14:19:31.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/zh_CN.po	2005-01-17 19:51:12.000000000 -0800
+@@ -723,7 +723,7 @@
+ msgstr "????????????????"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "??????????????????"
+ 
+ #: compose.c:1293
+
+diff -dur -x Entries mutt-cvs/po/zh_TW.po mutt-cvs-with-save-draft-message/po/zh_TW.po
+--- mutt-cvs/po/zh_TW.po	2004-04-12 14:19:31.000000000 -0700
++++ mutt-cvs-with-save-draft-message/po/zh_TW.po	2005-01-17 19:51:12.000000000 -0800
+@@ -711,7 +711,7 @@
+ msgstr "????????????????????????"
+ 
+ #: compose.c:1236
+-msgid "Postpone this message?"
++msgid "Save draft message?"
+ msgstr "???????????????????????????"
+ 
+ #: compose.c:1293
+
+
+
+----- End forwarded message -----
+
+-- 
+http://ofb.net/~frederik/
+
+
+From t.wolf at tu-bs.de  Sat Jun 17 20:04:08 2006
+From: t.wolf at tu-bs.de (Torsten Wolf)
+Date: Sat, 17 Jun 2006 20:04:08 +0200
+Subject: Bug#374183: mutt-ng: Slow after imap reconnect
+Message-ID: <20060617180408.8793.37184.reportbug@localhost>
+
+Package: mutt-ng
+Version: 0.0+20060429-1
+Severity: normal
+
+
+Starting mutt-ng, connecting to an imap server and browsing/reading mails 
+works just fine. As soon the connection breaks down and mutt-ng reconnects, 
+moving through the message index becomes painfully slow. It also seems that 
+this becomes slower each time it reconnects. Reading in the remote messages
+seems to work as quick as before. This happens with my configuration as
+well as with default values (~/.muttng removed).
+
+-- System Information:
+Debian Release: testing/unstable
+  APT prefers unstable
+  APT policy: (990, 'unstable'), (500, 'testing'), (500, 'stable'), (1, 'experimental')
+Architecture: i386 (i686)
+Shell:  /bin/sh linked to /bin/bash
+Kernel: Linux 2.6.16
+Locale: LANG=de_DE at euro, LC_CTYPE=de_DE at euro (charmap=ISO-8859-15)
+
+Versions of packages mutt-ng depends on:
+ii  libc6                   2.3.6-15         GNU C Library: Shared libraries
+ii  libgnutls13             1.3.5-1.1        the GNU TLS library - runtime libr
+ii  libgpg-error0           1.2-1            library for common error values an
+ii  libgpgme11              1.1.2-2          GPGME - GnuPG Made Easy
+ii  libidn11                0.5.18-2         GNU libidn library, implementation
+ii  libncursesw5            5.5-2            Shared libraries for terminal hand
+ii  libqdbm12               1.8.51-1         QDBM Database Libraries [runtime]
+ii  libsasl2                2.1.19.dfsg1-0.2 Authentication abstraction library
+ii  postfix [mail-transport 2.2.10-2         A high-performance mail transport 
+
+mutt-ng recommends no packages.
+
+-- no debconf information
+
+
+
+From grobian at gentoo.org  Tue Jun 27 19:26:53 2006
+From: grobian at gentoo.org (Grobian)
+Date: Tue, 27 Jun 2006 19:26:53 +0200
+Subject: [PATCH] Mutt IMAP Namespace Buffer Overflow Vulnerability
+Message-ID: <20060627172653.GA14288@gentoo.org>
+
+Hi,
+
+I uploaded a patch for Mutt-ng/r-804 for a vulnerability recently found
+in Mutt 1.5.11.  I had to port the path to muttng.
+See
+https://developer.berlios.de/patch/?func=detailpatch&patch_id=1166&group_id=2853
+
+(PS. there seems not to be much activity on muttng development recently.
+Am I just mistaken?  Is there nothing to do any more?  Or is there no
+desire to develop any more?)
+
+-- 
+Fabian Groffen
+Gentoo for Mac OS X Project
+
+

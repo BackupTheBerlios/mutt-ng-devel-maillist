@@ -1,0 +1,156 @@
+From riesebie at lxtec.de  Fri Sep  1 14:09:44 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Fri, 1 Sep 2006 14:09:44 +0200
+Subject: Bug#385499: Random segfaults in NNTP mode
+In-Reply-To: <20060831182309.GA5213@crystal>
+References: <20060831182309.GA5213@crystal>
+Message-ID: <20060901120944.GA3044@aragorn.home.lxtec.de>
+
+On Thu, 31 Aug 2006 the mental interface of
+H. S. Teoh told:
+
+> Package: mutt-ng
+> Version: 0.0+20060429-2
+> Severity: normal
+> 
+> Hi, I recently switched to mutt-ng in order to get NNTP support in my
+> mailer. It's been working great, except that I get random segfaults from
+> time to time when browsing newsgroups. I've not been able to find a
+> precise sequence of events that reproduces this, but it seems to be
+> related to syncing the news box and downloading new headers from the
+> server. Often, when I hit $ to sync deleted messages, mutt-ng would
+> segfault. Also, once in a while, when I return from the pager to the
+> index, mutt-ng tries to sync with the server and either segfaults or
+> just hangs.
+> 
+> None of these problems occur outside NNTP mode.
+
+This is IIRC a coding problem. Forwarded to mutt-ng-devel.
+
+Elimar
+
+
+-- 
+  Learned men are the cisterns of knowledge, 
+  not the fountainheads ;-)
+
+
+From riesebie at lxtec.de  Sun Sep 10 11:42:02 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 10 Sep 2006 11:42:02 +0200
+Subject: Bug#386702: mutt-ng: $TMP not honored
+In-Reply-To: <20060909145055.10944.19570.reportbug@thinkpad.wiegand.homedns.org>
+References: <20060909145055.10944.19570.reportbug@thinkpad.wiegand.homedns.org>
+Message-ID: <20060910094202.GD4589@aragorn.home.lxtec.de>
+
+On Sat, 09 Sep 2006 the mental interface of
+Wolf Wiegand told:
+
+> Package: mutt-ng
+> Version: 0.0+20060429-2
+> Severity: normal
+> 
+> Hi,
+> 
+> I just noticed that messages which are displayed using an external
+> program (html2text for example) are temporarily saved in /tmp, even if
+> $TMP specifies a different temp-directory. I use libpam-tmpdir, which
+> provides a separate temp-directory for every user:
+> 
+> wolf at denkbrett:~ $ id -u 
+> 1000
+> wolf at denkbrett:~ $ echo $TMP
+> /tmp/user/1000
+
+Please send the output of
+$ muttng -t | grep tmpdir
+
+Elimar
+
+-- 
+  Alles was viel bedacht wird ist bedenklich!;-)
+         Friedrich Nietzsche
+
+
+From riesebie at lxtec.de  Sun Sep 10 15:39:09 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 10 Sep 2006 15:39:09 +0200
+Subject: Bug#386702: mutt-ng: $TMP not honored
+In-Reply-To: <20060910110108.GA17628@denkbrett.wiegand.homedns.org>
+References: <20060909145055.10944.19570.reportbug@thinkpad.wiegand.homedns.org>
+	<20060910094202.GD4589@aragorn.home.lxtec.de>
+	<20060910110108.GA17628@denkbrett.wiegand.homedns.org>
+Message-ID: <20060910133908.GJ4589@aragorn.home.lxtec.de>
+
+On Sun, 10 Sep 2006 the mental interface of
+Wolf Wiegand told:
+
+> Hi,
+> 
+> Elimar Riesebieter wrote:
+> 
+> > Please send the output of
+> > $ muttng -t | grep tmpdir
+> > 
+> > Elimar
+> 
+> wolf at denkbrett:~ $ muttng -t |  grep tmpdir
+> tmpdir="/tmp"
+
+$ echo "\$TMP" >> .muttngrc
+
+If that works please send a mail to 386702-done at bugs.debian.org.
+
+Elimar
+
+
+-- 
+  Never make anything simple and efficient when a way 
+  can be found to make it complex and wonderful ;-)
+
+
+From riesebie at lxtec.de  Sun Sep 10 15:46:23 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 10 Sep 2006 15:46:23 +0200
+Subject: Bug#386702: mutt-ng: $TMP not honored
+In-Reply-To: <20060910133908.GJ4589@aragorn.home.lxtec.de>
+References: <20060909145055.10944.19570.reportbug@thinkpad.wiegand.homedns.org>
+	<20060910094202.GD4589@aragorn.home.lxtec.de>
+	<20060910110108.GA17628@denkbrett.wiegand.homedns.org>
+	<20060910133908.GJ4589@aragorn.home.lxtec.de>
+Message-ID: <20060910134623.GK4589@aragorn.home.lxtec.de>
+
+On Sun, 10 Sep 2006 the mental interface of
+Elimar Riesebieter told:
+
+> On Sun, 10 Sep 2006 the mental interface of
+> Wolf Wiegand told:
+> 
+> > Hi,
+> > 
+> > Elimar Riesebieter wrote:
+> > 
+> > > Please send the output of
+> > > $ muttng -t | grep tmpdir
+> > > 
+> > > Elimar
+> > 
+> > wolf at denkbrett:~ $ muttng -t |  grep tmpdir
+> > tmpdir="/tmp"
+> 
+> $ echo "\$TMP" >> .muttngrc
+
+Damn, it is sunday afternoon. This sould be:
+
+$ echo 'tmpdir="$TMP"' >> .muttngrc
+
+If that works please send a mail to 386702-done at bugs.debian.org.
+
+Elimar
+
+
+-- 
+  We all know Linux is great... it does infinite loops in 5 seconds.
+        -- Linus Torvalds
+
+

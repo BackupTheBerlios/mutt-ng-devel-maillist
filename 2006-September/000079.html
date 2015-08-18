@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Bug#386702: mutt-ng: $TMP not honored
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-September/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Bug%23386702%3A%20mutt-ng%3A%20%24TMP%20not%20honored&In-Reply-To=%3C20060910094202.GD4589%40aragorn.home.lxtec.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000078.html">
+   <LINK REL="Next"  HREF="000080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Bug#386702: mutt-ng: $TMP not honored</H1>
+    <B>Elimar Riesebieter</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Bug%23386702%3A%20mutt-ng%3A%20%24TMP%20not%20honored&In-Reply-To=%3C20060910094202.GD4589%40aragorn.home.lxtec.de%3E"
+       TITLE="Bug#386702: mutt-ng: $TMP not honored">riesebie at lxtec.de
+       </A><BR>
+    <I>Sun Sep 10 11:42:02 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000078.html">Bug#385499: Random segfaults in NNTP mode
+</A></li>
+        <LI>Next message: <A HREF="000080.html">Bug#386702: mutt-ng: $TMP not honored
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 09 Sep 2006 the mental interface of
+Wolf Wiegand told:
+
+&gt;<i> Package: mutt-ng
+</I>&gt;<i> Version: 0.0+20060429-2
+</I>&gt;<i> Severity: normal
+</I>&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I just noticed that messages which are displayed using an external
+</I>&gt;<i> program (html2text for example) are temporarily saved in /tmp, even if
+</I>&gt;<i> $TMP specifies a different temp-directory. I use libpam-tmpdir, which
+</I>&gt;<i> provides a separate temp-directory for every user:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">wolf at denkbrett</A>:~ $ id -u 
+</I>&gt;<i> 1000
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">wolf at denkbrett</A>:~ $ echo $TMP
+</I>&gt;<i> /tmp/user/1000
+</I>
+Please send the output of
+$ muttng -t | grep tmpdir
+
+Elimar
+
+-- 
+  Alles was viel bedacht wird ist bedenklich!;-)
+         Friedrich Nietzsche
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000078.html">Bug#385499: Random segfaults in NNTP mode
+</A></li>
+	<LI>Next message: <A HREF="000080.html">Bug#386702: mutt-ng: $TMP not honored
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Smarttime feature patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Smarttime%20feature%20patch&In-Reply-To=%3C20060311093920.GA21568%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000055.html">
+   <LINK REL="Next"  HREF="000057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Smarttime feature patch</H1>
+    <B>Grobian</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Smarttime%20feature%20patch&In-Reply-To=%3C20060311093920.GA21568%40gentoo.org%3E"
+       TITLE="Smarttime feature patch">grobian at gentoo.org
+       </A><BR>
+    <I>Sat Mar 11 10:39:20 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000055.html">Building the manual
+</A></li>
+        <LI>Next message: <A HREF="000057.html">SVN Repository Changes for 2006-03-14
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#56">[ date ]</a>
+              <a href="thread.html#56">[ thread ]</a>
+              <a href="subject.html#56">[ subject ]</a>
+              <a href="author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+
+Yesterday I decided to implement a long time wish I had for Mutt, and
+thus to dive into Mutt-ng's code to see where I could do that.  To cut a
+long story short: I managed to do what I wanted.
+
+The reason I post to this list is to see if there is some interest in
+what I did, and as a general first time feedback (I hope) on my
+&quot;feature&quot;, as well as a discussion on the way it should be done, because
+I made some assumptions in my current implementation.
+
+The feature I implemented, I call 'smarttime'.  In short it does a bit
+like `ls -la` does when displaying the time, it changes the format based
+on how long the time is ago, e.g:
+-rw-r--r--    1   4523 12 Aug  2005 muttng-20050809-r1.ebuild
+-rw-r--r--    1   4296 11 Mar 10:02 muttng-20060309.ebuild
+where the first is so old that it shows the year instead of the time.
+
+I implemented something alike for the $index_format variable, where I
+added the sequence %Q within the {[&lt;( time brackets.  The %Q gets
+replaced by a valid strftime string based on the value of the time that
+is printed and the current time.  An example of &quot;%[%Q] ...&quot; for example
+is:
+15-Feb ...
+15-Feb ...
+27-Feb ...
+Wed-08 ...
+08:33  ...
+where %Q is replaced by a 6 char wide string on the following
+conditions:
+- if the message is in the future: treat as if it were in the past
+- if the message was within the last 12 hours: &quot;%k:%M &quot; (08:33 )
+- if the message was within the last 7 days: &quot;%a-%d&quot;    (Wed-08)
+- if the message was within the last 12 months: &quot;%d-%b&quot; (27-Feb)
+- if the message is older than a year: &quot;%b-%y&quot;          (Aug-04)
+
+As can be seen, I made a number of assumptions, especially on the
+formatting of the date/time, which not everyone will like.  I thought
+about adding %q to for instance deal with am/pm time ( 8:33a), but I
+doubt whether that is flexible enough.  So, this is where I'd like to
+have some feedback.
+I first thought of implementing some conditionals, such that one could
+control which 'steps' to include or not, but maybe people don't like the
+switch-points I chose.  (I'm not sure on them myself either).  Another
+thought was to allow something like %[%H:%M ][%a-%d][%d-%b][%b-%y] such
+that people can define themselves how the four representations should
+look like.  Comments are appreciated!
+
+Last but not least, please find the patch here:
+<A HREF="http://dev.gentoo.org/~grobian/patches/muttng-smarttime.patch">http://dev.gentoo.org/~grobian/patches/muttng-smarttime.patch</A>
+It compiles and runs on both my OSX ppc and Gentoo Linux x86 machines.
+
+
+-- 
+Fabian Groffen
+Gentoo for Mac OS X Project
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000055.html">Building the manual
+</A></li>
+	<LI>Next message: <A HREF="000057.html">SVN Repository Changes for 2006-03-14
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#56">[ date ]</a>
+              <a href="thread.html#56">[ thread ]</a>
+              <a href="subject.html#56">[ subject ]</a>
+              <a href="author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

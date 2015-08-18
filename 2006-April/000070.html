@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> SVN Repository Changes for 2006-03-26
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-03-26&In-Reply-To=%3C44328AD6.mail7YF11YF9O%40cs.tu-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000069.html">
+   <LINK REL="Next"  HREF="000065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>SVN Repository Changes for 2006-03-26</H1>
+    <B>Rocco Rutte</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-03-26&In-Reply-To=%3C44328AD6.mail7YF11YF9O%40cs.tu-berlin.de%3E"
+       TITLE="SVN Repository Changes for 2006-03-26">pdmef at cs.tu-berlin.de
+       </A><BR>
+    <I>Tue Apr  4 17:03:50 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000069.html">SVN Repository Changes for 2006-03-29
+</A></li>
+        <LI>Next message: <A HREF="000065.html">SVN Repository Changes for 2006-03-31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-03-26.
+
+2006-04-04  09:44:47 +0200  Latest Revision: 801
+
+    Arnaud Lacombe &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">al at sigfpe.info</A>&gt; (pdmef):
+        - don't remove libgnuintl.h.in of included gettext but libgnuintl.h
+          instead (r799)
+        - fix the underlying problem of the str_dup()-issue for IMAP (r800)
+        - fix imap_login overwriting imap_user as documented (r800)
+        - remove useless debug printing of user/password in IMAP code since
+          we're logging full socket traffic at $debug_level==5 already
+          (r801)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/imap/auth_login.c,
+          trunk/intl/Makefile.in, trunk/account.c
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000069.html">SVN Repository Changes for 2006-03-29
+</A></li>
+	<LI>Next message: <A HREF="000065.html">SVN Repository Changes for 2006-03-31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

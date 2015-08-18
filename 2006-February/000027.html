@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> sidebar scrolling fixes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220194258.GA22004%40bolero.cs.tu-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000026.html">
+   <LINK REL="Next"  HREF="000028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>sidebar scrolling fixes</H1>
+    <B>Rocco Rutte</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060220194258.GA22004%40bolero.cs.tu-berlin.de%3E"
+       TITLE="sidebar scrolling fixes">pdmef at gmx.net
+       </A><BR>
+    <I>Mon Feb 20 20:42:59 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000026.html">sidebar scrolling fixes
+</A></li>
+        <LI>Next message: <A HREF="000028.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>* Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+
+&gt;<i>it still does not work :(
+</I>&gt;<i>e.g. when in the index (not pager).
+</I>
+r785 tries to fix one more issue, maybe the same?
+
+&gt;<i>since this is not the first problem in sidebar scrolling, it seem
+</I>&gt;<i>difficult to get it right for all possible 8 modes.
+</I>
+What I'm wondering all the time now may reduce the table size. With 
+$status_on_top=false, why is that the status for the pager is the same 
+width as the pager, i.e. the sidebar goes down to the message line? Or 
+the other way round: when it makes sense to have the pager status as 
+wide as the pager itself, doesn't it make sense for the index and other 
+menus as well?
+
+Opinion?
+
+
+&gt;<i>since we now got the first_line and last_line right in sidebar_draw
+</I>&gt;<i>(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+</I>
+Your patch is against 784 and I'll not commit it unless you still have 
+trouble with r785. Reason: there alreasy is known_lines globally so 
+calculating the lines again in calc_boundaries() isn't necessary. Also, 
+the diff from 784-785 stops re-calculating the boundary at every display 
+update (...since the calculation is only needed upon sidebar moves).
+
+   bye, Rocco
+-- 
+:<i>wq!
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000026.html">sidebar scrolling fixes
+</A></li>
+	<LI>Next message: <A HREF="000028.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

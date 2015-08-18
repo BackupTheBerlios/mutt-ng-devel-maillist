@@ -1,0 +1,1841 @@
+From kos at supportwizard.com  Thu Feb  2 23:11:52 2006
+From: kos at supportwizard.com (Konstantin Sobolev)
+Date: Fri, 3 Feb 2006 01:11:52 +0300
+Subject: allow_ansi fix
+Message-ID: <20060202221152.GA11080@kos.local>
+
+Hi.
+
+I'm not sure if I must post it here or in mutt ML, but since I'm using 
+mutt-ng I've decided to start here.
+
+Both mutt-1.5.11 and mutt-ng-20050814 (from Gentoo ebuild) don't 
+correctly work with allow_ansi option: codes "[39m" (set foreground to 
+defaut) and "[49m" (set background to default) ignore terminal settings 
+and always use white and black colors respecitvely. Also, if only 
+foreground color is set, background color stays initialized with 0 
+instead of default color. The same happens if only background color is 
+specified, foreground stays 0. It isn't noticable when using default 
+white-on-black terminal, but doesn't look too nice in a different color 
+scheme.
+
+Here's my attempt to fix the problem: 
+
+-- pager.c.orig        2006-02-03 00:14:29.183513904 +0300
++++ pager.c     2006-02-03 01:08:34.963355400 +0300
+@@ -823,6 +823,8 @@
+       a->attr = ANSI_OFF;
+       a->pair = -1;
+     }
++    a->bg = -2;
++    a->fg = -2;
+     while (pos < x) {
+       if (buf[pos] == '1' && (pos + 1 == x || buf[pos + 1] == ';')) {
+         a->attr |= ANSI_BOLD;
+@@ -856,7 +858,8 @@
+ #endif
+         a->pair = -1;
+         a->attr |= ANSI_COLOR;
+-        a->fg = buf[pos + 1] - '0';
++        if (buf[pos + 1] != '9')
++          a->fg = buf[pos + 1] - '0';
+         pos += 3;
+       }
+       else if (buf[pos] == '4' && isdigit (buf[pos + 1])) {
+@@ -866,7 +869,8 @@
+ #endif
+         a->pair = -1;
+         a->attr |= ANSI_COLOR;
+-        a->bg = buf[pos + 1] - '0';
++        if (buf[pos + 1] != '9')
++          a->bg = buf[pos + 1] - '0';
+         pos += 3;
+       }
+       else {
+
+brief comments: fg and bg colors are initialized with -2 from the very
+beginning. -2 is COLOR_DEFAULT from color.c (should be probably moved to 
+color.h) When back- or foreground colorcode is spotted, we check if it 
+is an attempt to set a default color and change bg/fg value only when 
+needed.
+ 
+Here's sample screenshot before the patch:
+ftp://80.70.228.198/misc/mutt1.png
+and after the patch:
+ftp://80.70.228.198/misc/mutt2.png
+
+-- 
+/KoS
+* C is for Bangers.						      
+
+
+From daniel_chin at walla.com  Fri Feb  3 10:36:08 2006
+From: daniel_chin at walla.com (DanielChin)
+Date: Fri, 03 Feb 2006 08:36:08 -0100
+Subject: Compliments of the day!
+Message-ID: <402D8FAE.FF0D8FB@walla.com>
+
+
+Dear Friend,
+
+ 
+I got your contact on my private search for a reliable
+and trusted person to handle a transaction of this
+nature. I know that the contents of this mail might
+sound so strange, but I want to assure you that every
+word of it is true.I am Mr Daniel Chin, credit officer
+of the AFC Merchant Bank.I have a concealed business
+suggestion for you.Before the plane crash of
+Macedonian's President and his Cabinet Members on
+February 26, 2004 , our Client Mile Krstevsk from the
+Ministry of Foreign Affairs,Macedonia and also a
+Business Man made a numbered fixed deposit for 18
+calendar months, with a value of Nine Million,Six
+Hundred Thousand United State Dollars($9.6Million)
+only in my branch.You can visit this website:
+ 
+http://antiwar.com/deliso/?articleid=2043
+ 
+After his death it was also discovered that Mile
+Krstevsk did not declare any next of kin in his
+official papers including the paper work of his bank
+deposit. And he also confided in me the last time he
+was at my office that no one except me knew of his
+deposit in my Bank.So, Nine Million,Six Hundred
+Thousand United State Dollars is still lying in my
+Bank and no one will ever come forward to claim it.
+What bothers me most is that according to the to the
+laws of my country at the expiration of 2years the
+funds will revert to the ownership of  the Singapore
+Government if nobody applies to claim the
+funds.Against this backdrop, my suggestion to you is
+that I will like you as a foreigner to stand as the
+next of kin to Mile Krstevsk so that you will be able
+to receive his funds.
+ 
+WHAT IS TO BE DONE:
+
+I want you to know that I have had everything planned
+out so that we shall come out successfully.I have
+contacted an Attorney that will prepare the necessary
+document that will back you up as the next of kin to
+Mile Krstevsk ,all that is required from you at this
+stage is for you to provide me with your Full Names
+and Address so that the Attorney can commence his
+job.After you have been made the next of kin,The
+Attorney will also file in for claims on your behalf
+and secure the necessary approvals and letter of
+Authority in your favor for the move of the funds to
+an account that will be provided by you.There is no
+risk involved at all in the matter as we are going to
+adopt a legalized method and the Attorney will prepare
+all the necessary documents according to the
+International Banking Laws.
+ 
+Please endeavor to observe utmost discretion in all
+matters concerning this issue.Once the funds have been
+transferred to your nominated bank 
+account we shall share in the ratio of 75% for me, 20%
+for you and 5%for any expenses incurred during the
+course of this operation.Should you be 
+interested please send me your private phone and fax
+numbers for easy communication, you can write me via
+my private box thus:(  daniel_chi at gawab.com  )and i will
+provide you with more details of this Project.
+ 
+Your earliest response to this letter will be
+appreciated.
+ 
+Kind Regards,
+
+Mr Daniel Chin.
+
+
+
+
+From bKabir02 at she.com  Mon Feb  6 21:57:51 2006
+From: bKabir02 at she.com (Mr.Kabir Bello.)
+Date: Tue, 7 Feb 2006 03:57:51 +0700
+Subject: REQUEST INVESTMENT
+Message-ID: <200602062057.k16KvVE14930@bat.berlios.de>
+
+From:Mr.Kabir Bello. 
+
+E-mail: Kabirbello02 at she.com
+
+Tel:+66-1-4919460.
+
+Attention:The Managing Director
+
+Before I proceed, may I humbly introduce myself to your good self, My Name is Mr.Kabir Bello, an Iraqi refugee ,my Father was until recently, one of the personal aid to the president of Iraq who was formerly overthrown out of power during the War in My Country which took many life . 
+Prior to this last serious crisis that is still ravaging in my country, which recently led to misfortune of our government and my late Father's position as the personal aid to the president, we were able to come over here in Thailand with my mother for investment ,we inherited the sum of US$16 Million. The funds were originally gotten from my late Father's proceeds. My late father was able to safe guard the fund with a very good diplomatic contact from my Country to Thailand which make us to come here to plan our life. 
+But all is about life and death I witnessed another tragedy which could have taken my own life in Thailand here but I feel this is not the time, It started on 26th of December here in Phuket another disaster occurred here named( TSUNAMI) which as well took the life of my mother and up till now her body are yet to to be found, I am the only surviving person in my Family now.
+I have decided to contact you because I am interested in investing in your country . Please kindly guide and assist me in making the right investment as every thing regarding technical and logistics details is worked out and ascertained to our respective satisfaction. In view of your participation, I am ready to give you a good negotiable percentage for your assistance, or better still commit it into viable Joint venture projects, be assured that you stand no risk of any kind as the funds belong to me as the only surviving son. As soon as I get your consent, I will quickly move this fund to your country for investment . 
+However, upon your acceptance to work as my partner, you can contact me with my private telephone number or e-mail for more details.
+I strongly believe that associating with you to embark on this and other business ventures will derive a huge success here after, please include you private contact telephone number and private e-mail when replying.
+
+Yours Sincerely.
+Mr.Kabir Bello.
+
+
+
+
+From riesebie at lxtec.de  Tue Feb  7 21:45:56 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Tue, 7 Feb 2006 21:45:56 +0100
+Subject: Bug#351817: mime_lookup broken
+In-Reply-To: <20060207202030.GA12660@apartia.fr>
+References: <20060207170504.GA6595@apartia.fr> <20060207191407.GA8257@aragorn.home.lxtec.de> <20060207191513.GA9823@apartia.fr> <20060207201810.GB8257@aragorn.home.lxtec.de> <20060207202030.GA12660@apartia.fr>
+Message-ID: <20060207204556.GD8257@aragorn.home.lxtec.de>
+
+On Tue, 07 Feb 2006 the mental interface of
+Louis-David Mitterrand told:
+
+> On Tue, Feb 07, 2006 at 09:18:10PM +0100, Elimar Riesebieter wrote:
+[...]
+> > Your problem is not a muttng bug :(
+> 
+>  From the mutt-ng manual:
+> 
+> 	7. MIME Lookup
+> 
+> 	   Usage: mime_lookup mime-type [mime-type ...]
+> 
+> 	   Usage: unmime_lookup mime-type [mime-type ...]
+
+Mmmm, mime_lookupisn't listed in muttng -t | grep mime. You're right
+the source related to grep mime_lookup source tree is identical.
+
+I'll forward this to upstream.
+
+Elimar
+
+-- 
+  Obviously the human brain works like a computer.
+  Since there are no stupid computers humans can't be stupid.
+  There are just a few running with Windows or even CE ;-)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060207/af602762/attachment.pgp>
+
+From pdmef at gmx.net  Thu Feb  9 12:41:18 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Thu, 9 Feb 2006 12:41:18 +0100
+Subject: Remove trailing space for empty headers in general? (was: f=f vs. trailing spaces in edit_headers)
+In-Reply-To: <20060209113423.GA6849@hermes.commontology.de>
+References: <20060201163743.GE6757@hermes.commontology.de> <20060209072517.GE6010@bolero.cs.tu-berlin.de> <20060209113423.GA6849@hermes.commontology.de>
+Message-ID: <20060209114118.GH6010@bolero.cs.tu-berlin.de>
+
+I'm taking this to devel list, too.
+
+* Andreas Wagner <A.Wagner at stud.uni-frankfurt.de>:
+>* Rocco Rutte wrote on Feb/09/2006:
+
+>>>Is there a way to avoid having spaces appended to the empty header lines when using 
+>>>edit_headers?
+
+>>No there isn't. But you have control over which headers are shown so you could only let 
+>>it provide non-empty fields and add new headers manually as needed. This isn't really 
+>>elegant, but it could do...
+
+>I think I have got it now as you've described.
+>While I know that your schedule is full and your time is scarce, would you be willing to 
+>add something like an option for it to your wishlist? It'd be an important improvement 
+>for format-flowed support I believe...
+
+As the space to empty header fields is always added regardless of 
+$edit_headers, my suggestion to simply remove the space in all cases. 
+IMHO special treatment for format=flowed only doesn't make sense.
+
+I'll go ahead removing it for all cases... except someone comes up with 
+a really good point for why the space is important. Opinions?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From nion at muttng.org  Fri Feb 10 19:04:33 2006
+From: nion at muttng.org (Nico Golde)
+Date: Fri, 10 Feb 2006 19:04:33 +0100
+Subject: Remove trailing space for empty headers in general? (was: f=f vs. trailing spaces in edit_headers)
+In-Reply-To: <20060209114118.GH6010@bolero.cs.tu-berlin.de>
+References: <20060201163743.GE6757@hermes.commontology.de> <20060209072517.GE6010@bolero.cs.tu-berlin.de> <20060209113423.GA6849@hermes.commontology.de> <20060209114118.GH6010@bolero.cs.tu-berlin.de>
+Message-ID: <20060210180433.GB11911@ngolde.de>
+
+Hi,
+* Rocco Rutte <pdmef at gmx.net> [2006-02-09 18:47]:
+> I'm taking this to devel list, too.
+> 
+> * Andreas Wagner <A.Wagner at stud.uni-frankfurt.de>:
+> >* Rocco Rutte wrote on Feb/09/2006:
+> 
+> >>>Is there a way to avoid having spaces appended to the empty 
+> >>>header lines when using edit_headers?
+> 
+[...] 
+> I'll go ahead removing it for all cases... except someone comes 
+> up with a really good point for why the space is important. 
+> Opinions?
+
+Perfect idea!
+Regards Nico
+-- 
+Nico Golde - JAB: nion at jabber.ccc.de | GPG: 0x73647CFF
+http://www.ngolde.de | http://www.muttng.org | http://grml.org
+Forget about that mouse with 3/4/5 buttons -
+gimme a keyboard with 103/104/105 keys!
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060210/ee73653d/attachment.pgp>
+
+From pdmef at cs.tu-berlin.de  Sat Feb 11 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Sat, 11 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-11
+Message-ID: <43EE6B46.mailOYY17M8G1@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-11.
+
+2006-02-11  21:30:06 +0100  Latest Revision: 778
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - remove trailing WS for empty header lines for $edit_headers
+          (needed for f=f and some editors) (r777)
+        - try to fix sidebar issue screwing up display when interactively
+          changing $sidebar_width when $sidebar_visible is set (by not using
+          saved width in sidebar.c any longer and using SidebarWidth
+          conditionally in all other places) (fixes some more sidebar issues
+          with curses) (r778)
+
+    Modified Files:
+        - trunk/pager.c, trunk/muttlib.c, trunk/VERSION.svn,
+          trunk/sendlib.c, trunk/sidebar.c, trunk/menu.c, trunk/compose.c
+
+
+From pdmef at cs.tu-berlin.de  Sun Feb 12 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Sun, 12 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-12
+Message-ID: <43EFBCC6.mailO7912LQQZ@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-12.
+
+2006-02-12  00:09:27 +0100  Latest Revision: 781
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - read $sysconfdir/mime.types in addition (fixes bug #6197 except
+          not with an option) (r779)
+        - fix one more use of SidebarWidth without checking for visibility
+          (reported by Trey Sizemore <trey at fastmail.fm>) (r780)
+        - decrease file size when truncating it for editing so detecting
+          changes works again (fixes bug #6000) (r781)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/sendlib.c, trunk/editmsg.c,
+          trunk/mutt_curses.h
+
+
+From pdmef at gmx.net  Mon Feb 13 00:18:30 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 13 Feb 2006 00:18:30 +0100
+Subject: allow_ansi fix
+In-Reply-To: <20060202221152.GA11080@kos.local>
+References: <20060202221152.GA11080@kos.local>
+Message-ID: <20060212231829.GA9040@bolero.cs.tu-berlin.de>
+
+* Konstantin Sobolev <kos at supportwizard.com>:
+
+>I'm not sure if I must post it here or in mutt ML, but since I'm using 
+>mutt-ng I've decided to start here.
+
+Committed, thanks!
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From pdmef at cs.tu-berlin.de  Mon Feb 13 23:55:01 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Mon, 13 Feb 2006 23:55:01 +0100
+Subject: SVN Repository Changes for 2006-02-13
+Message-ID: <43F10E45.mail7XQ117DY6@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-13.
+
+2006-02-13  00:15:56 +0100  Latest Revision: 782
+
+    Konstantin Sobolev <kos at supportwizard.com> (pdmef):
+        - respect terminal's colors instead of b/w for $allow_ansi (r782)
+
+    Modified Files:
+        - trunk/pager.c, trunk/VERSION.svn
+
+
+From andre.berger at web.de  Wed Feb 15 23:27:33 2006
+From: andre.berger at web.de (Andre Berger)
+Date: Wed, 15 Feb 2006 23:27:33 +0100
+Subject: Mutt-ng devel-r782(based: No sleep with muttng
+Message-ID: <20060215222733.GA394@hvk.local>
+
+Package: mutt-ng
+Version: devel-r782(based
+Severity: normal
+
+-- Please type your report below this line
+
+On my iBook G3 900 w/ Mac OS X 10.4.5, muttng will never allow the
+system to sleep unless compiled w/ --enable-buffy-size. Compiled with
+the latter, mailboxes that previously received new mail are listed as
+having new mail even though this is not true.
+
+In comparison, mutt 1.5.11 vvv-patch shows the mailbox behavior
+described above when compiled WITHOUT --enable-buffy-size, and there
+are no sleep problems at all.
+
+-Andre
+
+-- System Information
+System Version: Darwin hvk.local 8.5.0 Darwin Kernel Version 8.5.0: Sun Jan 22 10:38:46 PST 2006; root:xnu-792.6.61.obj~1/RELEASE_PPC Power Macintosh powerpc
+
+-- Build environment information
+
+(Note: This is the build environment installed on the system
+muttbug is run on.  Information may or may not match the environment
+used to build mutt.)
+
+- gcc version information
+gcc
+Using built-in specs.
+Target: powerpc-apple-darwin8
+Configured with: /private/var/tmp/gcc/gcc-5250.obj~12/src/configure --disable-checking -enable-werror --prefix=/usr --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-transform-name=/^[cg][^.-]*$/s/$/-4.0/ --with-gxx-include-dir=/include/c++/4.0.0 --build=powerpc-apple-darwin8 --host=powerpc-apple-darwin8 --target=powerpc-apple-darwin8
+Thread model: posix
+gcc version 4.0.1 (Apple Computer, Inc. build 5250)
+
+- CFLAGS
+-Wall -pedantic -Os
+
+-- Mutt-ng Version Information
+
+Mutt-ng devel-r782 (based on Mutt 1.5.11/2005-09-15)
+Copyright (C) 1996-2002 Michael R. Elkins and others.
+Mutt-ng comes with ABSOLUTELY NO WARRANTY; for details type `muttng -vv'.
+Mutt is free software, and you are welcome to redistribute it
+under certain conditions; type `muttng -vv' for details.
+
+System:
+  Darwin 8.5.0 (Power Macintosh)
+External Libraries:
+  ncurses 5.4
+  libiconv 1.10
+  gdbm GDBM version 1.8.3. 10/15/2002 (built Sep 24 2005 02:04:15)
+  OpenSSL 0.9.8 05 Jul 2005
+Compile Options:
+  -DEBUG
+  -HOMESPOOL  +USE_SETGID  +USE_DOTLOCK  +DL_STANDALONE  
+  +USE_FCNTL  -USE_FLOCK   +USE_INODESORT   +USE_HCACHE  
+  +USE_POP  +USE_NNTP  +USE_IMAP  +USE_GSS  +USE_SSL  -USE_GNUTLS  -USE_SASL  -USE_LIBESMTP  
+  +HAVE_REGCOMP  -USE_GNU_REGEX  -COMPRESSED  
+  +HAVE_COLOR  +HAVE_START_COLOR  +HAVE_TYPEAHEAD  +HAVE_BKGDSET  
+  +HAVE_CURS_SET  +HAVE_META  +HAVE_RESIZETERM  
+  +CRYPT_BACKEND_CLASSIC_PGP  +CRYPT_BACKEND_CLASSIC_SMIME  -CRYPT_BACKEND_GPGME  +BUFFY_SIZE -SUN_ATTACHMENT  
+  +ENABLE_NLS  -LOCALES_HACK  +HAVE_WC_FUNCS  +HAVE_LANGINFO_CODESET  +HAVE_LANGINFO_YESEXPR  
+  +HAVE_ICONV  -ICONV_NONTRANS  -HAVE_LIBIDN  +HAVE_GETSID  +HAVE_GETADDRINFO  
+Built-In Defaults:
+  -DOMAIN
+  -ISPELL
+  +SENDMAIL="/usr/sbin/sendmail"
+  +MAILPATH="/var/mail"
+  +PKGDATADIR="/usr/local/share/muttng"
+  +PKGDOCDIR="/usr/local/share/doc/mutt"
+  +SYSCONFDIR="/usr/local/etc"
+  +EXECSHELL="/bin/sh"
+  -MIXMASTER
+
+To contact the developers, please mail to <mutt-ng-devel at lists.berlios.de>.
+To visit the Mutt-ng homepage go to http://www.muttng.org.
+To report a bug, please use the fleang(1) utility.
+
+Mutt-ng is based on the following patches written for mutt:
+
+patch-1.5.6.cb.current_shortcut.2
+patch-1.5.6.tt.assumed_charset.1
+patch-1.5.6.tg.hcache.12
+patch-1.5.5.1.pdmef.short_mbox_name.1
+rr.compressed
+patch-1.5.4.fw.maildir_inode_sort
+patch-1.4.admcd.gnutls.59d
+patch-1.5.6i.sidebar.20041122
+patch-1.5.4.aw.listreply.1
+vvv.initials
+patch-1.5.5.1.cd.purge_message.3.4
+patch-1.5.5.1.cd.trash_folder.3.4
+patch-1.5.5.1.cd.edit_threads.9.5
+patch-1.5.4.cd.ifdef.1
+patch-1.5.4.cd.source_multiple.2
+vvv.quote
+vvv.nntp
+
+
+From l.g.e at web.de  Fri Feb 17 21:27:52 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Fri, 17 Feb 2006 21:27:52 +0100
+Subject: sidebar scrolling fixes
+Message-ID: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de>
+
+sidebar did not really know where to start and stop drawing lines.
+reproduce problem:
+  make your xterm short,
+  use a long list of mailboxes
+  show the sidebar
+  play with "help" and "status_on_top" settings,
+  and try to scoll...
+
+suggested fix is below.
+
+cheers,
+	Lars
+
+Index: sidebar.c
+===================================================================
+--- sidebar.c	(revision 782)
++++ sidebar.c	(working copy)
+@@ -44,7 +44,7 @@
+   if (TopBuffy < 0 || TopBuffy >= Incoming->length)
+     TopBuffy = 0;
+ 
+-  lines = LINES - 2 - (option (OPTSTATUSONTOP));
++  lines = LINES - 2 - !!option (OPTHELP);
+   known_lines = lines;
+   if (option (OPTSIDEBARNEWMAILONLY)) {
+     int i = CurBuffy;
+@@ -282,8 +282,11 @@
+  */
+ int sidebar_draw (int menu)
+ {
+-
+-  int lines = option (OPTHELP) ? 1 : 0, draw_devider = 1, i = 0;
++  int first_line = option (OPTSTATUSONTOP) ? 1 : option (OPTHELP) ? 1 : 0;
++  int last_line = LINES -
++	  ((option (OPTSTATUSONTOP) && !option (OPTHELP)) ? 1 : 2);
++  int draw_devider = 1, i = 0;
++  int line;
+   BUFFY *tmp;
+   short delim_len = str_len (SidebarDelim);
+   char blank[SHORT_STRING];
+@@ -319,10 +322,8 @@
+   if (draw_devider == 1){
+     /* draw the divider */
+     SETCOLOR (MT_COLOR_SIDEBAR);
+-    for (lines = 1;
+-         lines < LINES - 1 - (menu != MENU_PAGER || option (OPTSTATUSONTOP));
+-         lines++) {
+-      move (lines, SidebarWidth - delim_len);
++    for (line = first_line; line < last_line; line++) {
++      move (line, SidebarWidth - delim_len);
+       if (option (OPTASCIICHARS))
+         addstr (NONULL (SidebarDelim));
+       else if (!option (OPTASCIICHARS) && !str_cmp (SidebarDelim, "|"))
+@@ -337,12 +338,11 @@
+ 
+   if (list_empty(Incoming))
+     return 0;
+-  lines = option (OPTHELP) ? 1 : 0;     /* go back to the top */
++  line = first_line;
+   calc_boundaries (menu);
+ 
+   /* actually print items */
+-  for (i = TopBuffy; i < Incoming->length && lines < LINES - 1 - 
+-       (menu != MENU_PAGER || option (OPTSTATUSONTOP)); i++) {
++  for (i = TopBuffy; i < Incoming->length && line < last_line; i++) {
+     tmp = (BUFFY*) Incoming->data[i];
+ 
+     if (i == CurBuffy)
+@@ -354,15 +354,15 @@
+     else
+       SETCOLOR (MT_COLOR_NORMAL);
+ 
+-    move (lines, 0);
+-    lines += make_sidebar_entry (tmp->path, i, SidebarWidth-delim_len);
++    move (line, 0);
++    line += make_sidebar_entry (tmp->path, i, SidebarWidth-delim_len);
+   }
+ 
+   /* fill with blanks to bottom */
+   memset (&blank, ' ', sizeof (blank));
+   SETCOLOR (MT_COLOR_NORMAL);
+-  for (; lines < LINES - 1 - (menu != MENU_PAGER || option (OPTSTATUSONTOP)); lines++) {
+-    move (lines, 0);
++  for (; line < last_line; line++) {
++    move (line, 0);
+     addnstr (blank, SidebarWidth-delim_len);
+   }
+   return 0;
+
+
+From pdmef at gmx.net  Sun Feb 19 14:05:51 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 19 Feb 2006 14:05:51 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de>
+Message-ID: <20060219130550.GB24028@bolero.cs.tu-berlin.de>
+
+* Lars Ellenberg <l.g.e at web.de>:
+
+>sidebar did not really know where to start and stop drawing lines.
+>reproduce problem:
+
+Thanks for the fix, I'll include it tomorrow if I have time since I need 
+to fix a minor issue with it (when in pager mode, last_line must be 1 higher 
+as the status bar isn't drawn full-width but only with the width of the pager)
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From l.g.e at web.de  Sun Feb 19 15:54:10 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Sun, 19 Feb 2006 15:54:10 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060219130550.GB24028@bolero.cs.tu-berlin.de>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de>
+Message-ID: <20060219145410.GB7290@soda.linbit>
+
+/ 2006-02-19 14:05:51 +0100
+\ Rocco Rutte:
+> * Lars Ellenberg <l.g.e at web.de>:
+> 
+> >sidebar did not really know where to start and stop drawing lines.
+> >reproduce problem:
+> 
+> Thanks for the fix, I'll include it tomorrow if I have time since I
+> need to fix a minor issue with it (when in pager mode, last_line must
+> be 1 higher as the status bar isn't drawn full-width but only with the
+> width of the pager)
+... unless status_on_top=yes ...
+
+oh, ok.
+my macro bindings make that difficult...
+whenever I enter the pager, the sidebar is hidden automagically...
+
+anyways, just add one line there:
+ int last_line = LINES -
+ 	((option (OPTSTATUSONTOP) && !option (OPTHELP))
+	? 1 : 2 -(menu == MENU_PAGER));
+ 		       
+
+-- 
+: Lars Ellenberg                                  Tel +43-1-8178292-55 :
+: LINBIT Information Technologies GmbH            Fax +43-1-8178292-82 :
+: Schoenbrunner Str. 244, A-1120 Vienna/Europe   http://www.linbit.com :
+
+
+From michael at kjorling.com  Sun Feb 19 16:12:43 2006
+From: michael at kjorling.com (Michael Kjorling)
+Date: Sun, 19 Feb 2006 15:12:43 +0000
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060219130550.GB24028@bolero.cs.tu-berlin.de>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de>
+Message-ID: <43f88aeb.5812fdb0@vuk.kjorling.com>
+
+On 2006-02-19 14:05 +0100, pdmef at gmx.net wrote:
+> Thanks for the fix, I'll include it tomorrow if I have time since I need to 
+> fix a minor issue with it (when in pager mode, last_line must be 1 higher as 
+> the status bar isn't drawn full-width but only with the width of the pager)
+
+I'm curious if this may be related to an issue I'm seeing. With the
+following settings:
+
+set help=yes
+set status_on_top=yes
+set sidebar_width=25
+set sidebar_visible=yes
+
+...whenever I am in the pager, the message status line (which normally
+shows sender, subject and perhaps a few other things that I'm
+forgetting right now) is drawn, but blank. Toggling sidebar_visible
+doesn't seem to have any effect on this.
+
+Also, in the attachment menu, it sidebar width is not considered so
+the MIME type etc. gets pushed off the edge of the screen. Toggling
+the sidebar is a simple, but dirty fix.
+
+This is all with muttng revision 781.
+ 
+-- 
+Michael Kj?rling, michael at kjorling.com - http://michael.kjorling.com/
+* ..... No bird soars too high if he soars with his own wings ..... *
+* ASCII Ribbon Campaign: Against HTML Mail, Proprietary Attachments *
+* PGP/GnuPG encrypted e-mail preferred * OpenPGP key ID: 0xBDE9ADA6 *
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060219/c4d8d320/attachment.pgp>
+
+From pdmef at gmx.net  Mon Feb 20 16:29:43 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 20 Feb 2006 16:29:43 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060219145410.GB7290@soda.linbit>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de> <20060219145410.GB7290@soda.linbit>
+Message-ID: <20060220152943.GF24028@bolero.cs.tu-berlin.de>
+
+* Lars Ellenberg <l.g.e at web.de>:
+
+[...]
+>anyways, just add one line there:
+
+That didn't really work out completely, too. The fix I committed is 
+mainly yours, though, so thanks a lot!
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From pdmef at gmx.net  Mon Feb 20 16:31:05 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 20 Feb 2006 16:31:05 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <43f88aeb.5812fdb0@vuk.kjorling.com>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de> <43f88aeb.5812fdb0@vuk.kjorling.com>
+Message-ID: <20060220153105.GG24028@bolero.cs.tu-berlin.de>
+
+* Michael Kjorling <michael at kjorling.com>:
+
+>...whenever I am in the pager, the message status line (which normally
+>shows sender, subject and perhaps a few other things that I'm
+>forgetting right now) is drawn, but blank. Toggling sidebar_visible
+>doesn't seem to have any effect on this.
+
+Hmm. What does 'blank' mean? In the right background color but no 
+content? Can you post a (portion of a) screenshot URL?
+
+>Also, in the attachment menu, it sidebar width is not considered so
+>the MIME type etc. gets pushed off the edge of the screen. Toggling
+>the sidebar is a simple, but dirty fix.
+
+This is fixed, thanks for mentioning. There may well be more of such 
+cases...
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From l.g.e at web.de  Mon Feb 20 19:29:05 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Mon, 20 Feb 2006 19:29:05 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060220152943.GF24028@bolero.cs.tu-berlin.de>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de> <20060219145410.GB7290@soda.linbit> <20060220152943.GF24028@bolero.cs.tu-berlin.de>
+Message-ID: <20060220182905.GA9867@soda.linbit>
+
+/ 2006-02-20 16:29:43 +0100
+\ Rocco Rutte:
+> * Lars Ellenberg <l.g.e at web.de>:
+> 
+> [...]
+> >anyways, just add one line there:
+> 
+> That didn't really work out completely, too. The fix I committed is
+> mainly yours, though, so thanks a lot!
+
+it still does not work :(
+e.g. when in the index (not pager).
+
+since this is not the first problem in sidebar scrolling, it seem
+difficult to get it right for all possible 8 modes.
+
+so here is a table which I hope is correct:
+
+menu == pager | status_on_top | help || first_line | last_line | lines
+           0  |      no       |  no  ||     0      | LINES-2   | LINES-2
+           0  |      no       | yes  ||     1      | LINES-2   | LINES-3
+           0  |     yes       |  no  ||     1      | LINES-1   | LINES-2
+           0  |     yes       | yes  ||     1      | LINES-2   | LINES-3
+------------------------------------------------------------------------
+           1  |      no       |  no  ||     0      | LINES-1   | LINES-1
+           1  |      no       | yes  ||     1      | LINES-1   | LINES-2
+           1  |     yes       |  no  ||     1      | LINES-1   | LINES-2
+           1  |     yes       | yes  ||     1      | LINES-2   | LINES-3
+------------------------------------------------------------------------
+
+since we now got the first_line and last_line right in sidebar_draw
+(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+
+cheers,
+	Lars
+
+Index: sidebar.c
+===================================================================
+--- sidebar.c	(revision 784)
++++ sidebar.c	(working copy)
+@@ -35,7 +35,10 @@
+ /* computes first entry to be shown */
+ void calc_boundaries (int menu)
+ {
+-  int lines = 0;
++  /* see sidebar_draw */
++  int lines = (LINES - 3)
++	  + !option (OPTHELP)
++	  + ((menu == MENU_PAGER) && !option (OPTSTATUSONTOP));
+ 
+   if (list_empty(Incoming))
+     return;
+@@ -44,7 +47,6 @@
+   if (TopBuffy < 0 || TopBuffy >= Incoming->length)
+     TopBuffy = 0;
+ 
+-  lines = LINES - 2 - !option (OPTHELP);
+   known_lines = lines;
+   if (option (OPTSIDEBARNEWMAILONLY)) {
+     int i = CurBuffy;
+@@ -282,20 +284,30 @@
+  */
+ int sidebar_draw (int menu)
+ {
+-  int first_line = option (OPTSTATUSONTOP) ? 1 : option (OPTHELP) ? 1 : 0;
+-  int last_line = LINES-1;
++/*
++menu == pager | status_on_top | help || first_line | last_line | lines
++           0  |      no       |  no  ||     0      | LINES-2   | LINES-2
++           0  |      no       | yes  ||     1      | LINES-2   | LINES-3
++           0  |     yes       |  no  ||     1      | LINES-1   | LINES-2
++           0  |     yes       | yes  ||     1      | LINES-2   | LINES-3
++------------------------------------------------------------------------
++           1  |      no       |  no  ||     0      | LINES-1   | LINES-1
++           1  |      no       | yes  ||     1      | LINES-1   | LINES-2
++           1  |     yes       |  no  ||     1      | LINES-1   | LINES-2
++           1  |     yes       | yes  ||     1      | LINES-2   | LINES-3
++------------------------------------------------------------------------
++*/
++  int first_line = (option (OPTSTATUSONTOP) || option (OPTHELP));
++  int last_line = (LINES - 2)
++	  + ((menu == MENU_PAGER)
++	     ? (!option (OPTSTATUSONTOP) || !option (OPTHELP))
++	     : ( option (OPTSTATUSONTOP) && !option (OPTHELP)));
+   int draw_devider = 1, i = 0;
+   int line;
+   BUFFY *tmp;
+   short delim_len = str_len (SidebarDelim);
+   char blank[SHORT_STRING];
+ 
+-  if (option (OPTSTATUSONTOP)) {
+-    last_line -= option (OPTHELP) ? 1 : 0;
+-  } else {
+-    last_line -= 1-(menu==MENU_PAGER);
+-  }
+-
+   /* initialize first time */
+   if (!initialized) {
+     prev_show_value = option (OPTMBOXPANE);
+
+
+From pdmef at gmx.net  Mon Feb 20 20:42:59 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 20 Feb 2006 20:42:59 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060220182905.GA9867@soda.linbit>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de> <20060219145410.GB7290@soda.linbit> <20060220152943.GF24028@bolero.cs.tu-berlin.de> <20060220182905.GA9867@soda.linbit>
+Message-ID: <20060220194258.GA22004@bolero.cs.tu-berlin.de>
+
+* Lars Ellenberg <l.g.e at web.de>:
+
+>it still does not work :(
+>e.g. when in the index (not pager).
+
+r785 tries to fix one more issue, maybe the same?
+
+>since this is not the first problem in sidebar scrolling, it seem
+>difficult to get it right for all possible 8 modes.
+
+What I'm wondering all the time now may reduce the table size. With 
+$status_on_top=false, why is that the status for the pager is the same 
+width as the pager, i.e. the sidebar goes down to the message line? Or 
+the other way round: when it makes sense to have the pager status as 
+wide as the pager itself, doesn't it make sense for the index and other 
+menus as well?
+
+Opinion?
+
+
+>since we now got the first_line and last_line right in sidebar_draw
+>(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+
+Your patch is against 784 and I'll not commit it unless you still have 
+trouble with r785. Reason: there alreasy is known_lines globally so 
+calculating the lines again in calc_boundaries() isn't necessary. Also, 
+the diff from 784-785 stops re-calculating the boundary at every display 
+update (...since the calculation is only needed upon sidebar moves).
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From l.g.e at web.de  Mon Feb 20 22:52:32 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Mon, 20 Feb 2006 22:52:32 +0100
+Subject: sidebar scrolling fixes
+In-Reply-To: <20060220194258.GA22004@bolero.cs.tu-berlin.de>
+References: <d9MTZFtYukGpUR2cQ+Mwjf4=lge@web.de> <20060219130550.GB24028@bolero.cs.tu-berlin.de> <20060219145410.GB7290@soda.linbit> <20060220152943.GF24028@bolero.cs.tu-berlin.de> <20060220182905.GA9867@soda.linbit> <20060220194258.GA22004@bolero.cs.tu-berlin.de>
+Message-ID: <20060220215232.GB28159@barkeeper1.linbit>
+
+/ 2006-02-20 20:42:59 +0100
+\ Rocco Rutte:
+> * Lars Ellenberg <l.g.e at web.de>:
+> 
+> >it still does not work :(
+> >e.g. when in the index (not pager).
+> 
+> r785 tries to fix one more issue, maybe the same?
+
+most likely, yes.
+
+> >since this is not the first problem in sidebar scrolling, it
+> >seem difficult to get it right for all possible 8 modes.
+> 
+> What I'm wondering all the time now may reduce the table size.
+> With $status_on_top=false, why is that the status for the pager
+> is the same width as the pager, i.e. the sidebar goes down to
+> the message line? Or the other way round: when it makes sense to
+> have the pager status as wide as the pager itself, doesn't it
+> make sense for the index and other menus as well?
+
+> Opinion?
+
+everything that makes it easier is good.  I don't see a reason to
+make a difference between index and pager for this. would also
+avoid "strange" jumps in the sidebar display when you change from
+pager to index and back.
+
+> >since we now got the first_line and last_line right in sidebar_draw
+> >(I think), calc_boundaries needs to be fixed.  I suggest the patch below.
+> 
+> Your patch is against 784 and I'll not commit it unless you still have
+> trouble with r785.
+
+seems like we have hacked at the same time, I obviously did svn up
+before I made that patch...
+
+> Reason: there alreasy is known_lines globally so calculating the
+> lines again in calc_boundaries() isn't necessary.  Also, the
+> diff from 784-785 stops re-calculating the boundary at every
+> display update (...since the calculation is only needed upon
+> sidebar moves).
+
+indeed, I still have problems, though very obscure ones.
+but the same that I had when I tried to fix it in the same way
+(assign to known_lines directly).
+the problem is a little hard to reproduce, it takes several attempts,
+and I do not see the pattern yet.
+
+the problem is this:
+	go in the pager, scroll the sidebar randomly
+	go back in the index, scroll the sidebar
+	repeat.
+
+sometimes (every some 20th try or so) the sidebar part of the statusbar
+now gets overprinted by a unreachable folder name. once it happens,
+it happens repeatedly with different folder names. the statusbar itself
+won't be redrawn because it does not suspect it has been damaged.
+it seem to depend on the exact position in the sidebar befor going
+to pager mode the first time (???)
+
+this did not occur with my patch (not yet, maybe).
+if I hit this again and happen to be more awake than just now,
+I'll try to track it down to something more specific...
+
+	Lars
+
+
+From pdmef at cs.tu-berlin.de  Mon Feb 20 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Mon, 20 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-20
+Message-ID: <43FA48C6.mail1G9119LC2@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-20.
+
+2006-02-20  16:26:45 +0100  Latest Revision: 785
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - dirty fix compose screen's attachment where lines are too long
+          (due to mutt_FormatString() ignoring sidebar) (reported by Michael
+          Kjorling <michael at kjorling.com>) (r784)
+        - yet another sidebar scrolling fix (r785)
+
+    Lars Ellenberg <l.g.e at web.de> (pdmef):
+        - fix sidebar scrolling/offset issue where pointer gets hidden by
+          status line (r783)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/do-commit.sh, trunk/compose.c,
+          trunk/sidebar.c
+
+
+From pdmef at cs.tu-berlin.de  Fri Feb 24 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Fri, 24 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-24
+Message-ID: <43FF8EC6.mailCBX1GSTFU@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-24.
+
+2006-02-24  14:08:17 +0100  Latest Revision: 787
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - fix a crash when calc_boundaries() is called too early (no info
+          about terminal height yet) (r787)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/sidebar.c
+
+
+From l.g.e at web.de  Sat Feb 25 20:37:50 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Sat, 25 Feb 2006 20:37:50 +0100
+Subject: pager status_on_top fix
+Message-ID: <20060225193750.GA16782@soda.linbit>
+
+Michael Kjorling reported in the other thread [sidbar scrolling fix]
+that:
+> ..whenever I am in the pager, the message status line (which normally
+> shows sender, subject and perhaps a few other things that I'm
+> forgetting right now) is drawn, but blank. Toggling sidebar_visible
+> doesn't seem to have any effect on this.
+
+and I could reproduce that.
+the patchlet below "works for me" ;)
+
+	Lars
+
+
+Index: pager.c
+===================================================================
+--- pager.c	(revision 788)
++++ pager.c	(working copy)
+@@ -1663,13 +1663,9 @@
+         _mutt_make_string (buffer, l1 < l2 ? l1 : l2, NONULL (PagerFmt),
+                            Context, extra->bdy->hdr, M_FORMAT_MAKEPRINT);
+       }
+-      if (option(OPTSTATUSONTOP)) {
+-        move(0,0);
+-      } else {
+-        move(LINES-2,SW);
+-      }
+-      mutt_paddstr (COLS - 10 - (option(OPTSTATUSONTOP)?0:SW), IsHeader (extra)
+-                    || IsMsgAttach (extra) ? buffer : banner);
++      move(statusoffset, SW);
++      mutt_paddstr (COLS - 10 - SW, IsHeader (extra)
++                   || IsMsgAttach (extra) ? buffer : banner);
+ 
+       addstr (" -- (");
+       if (last_pos < sb.st_size - 1)
+
+
+
+From pdmef at cs.tu-berlin.de  Sat Feb 25 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Sat, 25 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-25
+Message-ID: <4400E046.mailA3O117LC4@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-25.
+
+2006-02-25  11:20:23 +0100  Latest Revision: 788
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - include bug fix for #5589 (r788)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/imap/command.c
+
+
+From riesebie at lxtec.de  Sun Feb 26 08:40:28 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 26 Feb 2006 08:40:28 +0100
+Subject: Bug#354422: mutt-ng: do not check for new mail while in compose
+In-Reply-To: <E1FDEF5-00058L-NJ@belka.rutgers.edu>
+References: <E1FDEF5-00058L-NJ@belka.rutgers.edu>
+Message-ID: <20060226074028.GB4353@aragorn.home.lxtec.de>
+
+forwarded #354422 mutt-ng-devel at lists.berlios.de
+
+thanks
+
+On Sun, 26 Feb 2006 the mental interface of
+Yaroslav Halchenko told:
+
+> Package: mutt-ng
+> Version: 0.0+20060213-1
+> Severity: wishlist
+> Tags: patch
+> 
+> I've got quite a few of imap mailboxes which mutt is dedicated to
+> monitor, but it started to annoy me too much now when it "slept" for
+> up to 10 seconds whenever I leave vim while composing an email.
+> That is why I decided that it will be useful to have that "forced"
+> check for new mail optional. Please see patch below which provides an
+> option sidebar_mail_check_compose (yes by default to confirm previous
+> behavior)
+> 
+> --- muttng.orig/mutt-ng-0.0+20060213/compose.c	2006-02-11 17:09:29.000000000 -0500
+> +++ mutt-ng-0.0+20060213/compose.c	2006-02-25 22:40:34.000000000 -0500
+> @@ -563,8 +563,11 @@
+>      menu->help =
+>        mutt_compile_help (helpstr, sizeof (helpstr), MENU_COMPOSE,
+>                           ComposeHelp);
+> -
+> -  if (option (OPTMBOXPANE))
+> +  /* yoh at onerussian.com: 
+> +   * I don't want that delay to be whenever I edit the mail: 
+> +   * OPTSIDEBARMAILCHECKCOMPOSE is for that purpose
+> +   */
+> +  if (option (OPTMBOXPANE) && option (OPTSIDEBARMAILCHECKCOMPOSE))
+>      buffy_check (1);
+>    while (loop) {
+>  #ifdef USE_NNTP
+> --- muttng.orig/mutt-ng-0.0+20060213/init.h	2006-01-13 03:51:23.000000000 -0500
+> +++ mutt-ng-0.0+20060213/init.h	2006-02-25 22:33:27.000000000 -0500
+> @@ -1584,6 +1584,11 @@
+>     ** .pp
+>     ** The width of the sidebar.
+>     */
+> +  {"sidebar_mail_check_compose", DT_BOOL, R_BOTH, OPTSIDEBARMAILCHECKCOMPOSE, "yes" },
+> +  /*
+> +   ** .pp
+> +   ** If \fIset\fP, checks for new mail when sidebar is displaied in compose mode.
+> +   */
+>    {"sidebar_newmail_only", DT_BOOL, R_BOTH, OPTSIDEBARNEWMAILONLY, "no" },
+>    /*
+>     ** .pp
+> --- muttng.orig/mutt-ng-0.0+20060213/mutt.h	2005-10-22 20:52:43.000000000 -0400
+> +++ mutt-ng-0.0+20060213/mutt.h	2006-02-25 23:19:57.000000000 -0500
+> @@ -519,6 +519,7 @@
+>  #endif
+>    OPTSHORTENHIERARCHY,          /* set when to shorten "hierarchies" in the sidebar */
+>    OPTSIDEBARNEWMAILONLY,
+> +  OPTSIDEBARMAILCHECKCOMPOSE,   /* set when to check for new mail while in compose mode */
+>    OPTMAX
+>  };
+
+Forwarded upstream
+
+Elimar
+
+
+-- 
+  Learned men are the cisterns of knowledge, 
+  not the fountainheads ;-)
+
+
+From pdmef at gmx.net  Sun Feb 26 13:14:47 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 26 Feb 2006 13:14:47 +0100
+Subject: pager status_on_top fix
+In-Reply-To: <20060225193750.GA16782@soda.linbit>
+References: <20060225193750.GA16782@soda.linbit>
+Message-ID: <20060226121446.GF16719@bolero.cs.tu-berlin.de>
+
+* Lars Ellenberg <l.g.e at web.de>:
+>Michael Kjorling reported in the other thread [sidbar scrolling fix]
+>that:
+
+>> ..whenever I am in the pager, the message status line (which normally
+>> shows sender, subject and perhaps a few other things that I'm
+>> forgetting right now) is drawn, but blank. Toggling sidebar_visible
+>> doesn't seem to have any effect on this.
+
+I still saw no screenshot... ;-(
+
+>and I could reproduce that.
+>the patchlet below "works for me" ;)
+
+The patch moves the pager status line right by $sidebar_width cells in 
+the first screen line. But: from (0,0) to (0,$sidebar_width) the screen 
+is left blank which looks ugly with colors.
+
+I still have no input on whether we wan't to always adjust all status 
+line to the actual width of the screen exlcluding the sidebar. For 
+example, with and without the patch, the pager status line is still the 
+only status line being as wide as the pager. The index status line is 
+full-screen and not as wide as the index screen. ;-((
+
+That's what I'd like to see solved... since for the problem I don't know 
+the best place to fix the blanks: within the sidebar or within the 
+pager?
+
+Can we please talk about how to align all status lines first?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From pdmef at gmx.net  Sun Feb 26 13:18:15 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 26 Feb 2006 13:18:15 +0100
+Subject: Bug#354422: mutt-ng: do not check for new mail while in compose
+In-Reply-To: <20060226074028.GB4353@aragorn.home.lxtec.de>
+References: <E1FDEF5-00058L-NJ@belka.rutgers.edu> <20060226074028.GB4353@aragorn.home.lxtec.de>
+Message-ID: <20060226121815.GG16719@bolero.cs.tu-berlin.de>
+
+* Elimar Riesebieter <riesebie at lxtec.de>:
+
+>> I've got quite a few of imap mailboxes which mutt is dedicated to
+>> monitor, but it started to annoy me too much now when it "slept" for
+>> up to 10 seconds whenever I leave vim while composing an email.
+>> That is why I decided that it will be useful to have that "forced"
+>> check for new mail optional. Please see patch below which provides an
+>> option sidebar_mail_check_compose (yes by default to confirm previous
+>> behavior)
+
+I saw someone talking on IRC about it (was that you? ;-). But I must say 
+I really hate the idea of adding a variable "just" for this issue.
+
+Another try: does it help if you change 'buffy_check(1)' to 
+'buffy_check(0)'? That would let muttng use it's ordinary $mail_check 
+and $imap_mail_check timeouts. Still the problem could happen but there 
+likely are more places where muttng is not primarily active so we could 
+need more variables for all these types of situations which I'd like to 
+avoid.
+
+Can you please try 'buffy_check(0)' and report back?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From l.g.e at web.de  Sun Feb 26 13:56:48 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Sun, 26 Feb 2006 13:56:48 +0100
+Subject: pager status_on_top fix
+In-Reply-To: <20060226121446.GF16719@bolero.cs.tu-berlin.de>
+References: <20060225193750.GA16782@soda.linbit> <20060226121446.GF16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226125624.GB18194@soda.linbit>
+
+/ 2006-02-26 13:14:47 +0100
+\ Rocco Rutte:
+> * Lars Ellenberg <l.g.e at web.de>:
+> >Michael Kjorling reported in the other thread [sidbar scrolling fix]
+> >that:
+> 
+> >>..whenever I am in the pager, the message status line (which normally
+> >>shows sender, subject and perhaps a few other things that I'm
+> >>forgetting right now) is drawn, but blank. Toggling sidebar_visible
+> >>doesn't seem to have any effect on this.
+> 
+> I still saw no screenshot... ;-(
+
+help=no
+status_on_top=yes
+pager_index_lines=5
+
+
+---Mutt-ng: ~/tmp/tmp.mbx [Msgs:1 Post:1 3.8K]---(threads/last-date-received)---------------(all)---
+tmp.mbx 1|   1   C 060226 13:14 Rocco Rutte                    (  34) Re: pager status_on_top fix
+         |
+         |Date: Sun, 26 Feb 2006 13:14:47 +0100
+         |From: Rocco Rutte <pdmef at gmx.net>
+         |To: mutt-ng-devel at lists.berlios.de
+         |Cc: Lars Ellenberg <l.g.e at web.de>
+         |Subject: Re: pager status_on_top fix
+         |Message-ID: <20060226121446.GF16719 at bolero.cs.tu-berlin.de>
+         |Mail-Followup-To: mutt-ng-devel at lists.berlios.de,
+         |        Lars Ellenberg <l.g.e at web.de>
+         |User-Agent: mutt-ng/devel-r787 (SunOS)
+         |Status: RO
+         |
+         |* Lars Ellenberg <l.g.e at web.de>:
+         |>Michael Kjorling reported in the other thread [sidbar scrolling fix]
+         |+>that:
+         |
+         |>>..whenever I am in the pager, the message status line (which normally
+         |>>shows sender, subject and perhaps a few other things that I'm
+         |+>>forgetting right now) is drawn, but blank. Toggling sidebar_visible
+         |>>doesn't seem to have any effect on this.
+         |+
+         |I still saw no screenshot... ;-(
+         |+
+
+help=no
+status_on_top=no
+pager_index_lines=5
+
+tmp.mbx 1|   1   C 060226 13:14 Rocco Rutte                    (  34) Re: pager status_on_top fix
+         |---Mutt-ng: ~/tmp/tmp.mbx [Msgs:1 3.8K]---(threads/last-date-received)------------(all)---
+         |Date: Sun, 26 Feb 2006 13:14:47 +0100
+         |From: Rocco Rutte <pdmef at gmx.net>
+         |To: mutt-ng-devel at lists.berlios.de
+         |Cc: Lars Ellenberg <l.g.e at web.de>
+         |Subject: Re: pager status_on_top fix
+         |Message-ID: <20060226121446.GF16719 at bolero.cs.tu-berlin.de>
+         |Mail-Followup-To: mutt-ng-devel at lists.berlios.de,
+         |        Lars Ellenberg <l.g.e at web.de>
+         |User-Agent: mutt-ng/devel-r787 (SunOS)
+         |Status: RO
+         |
+         |* Lars Ellenberg <l.g.e at web.de>:
+         |>Michael Kjorling reported in the other thread [sidbar scrolling fix]
+         |>that:
+         |
+         |>>..whenever I am in the pager, the message status line (which normally
+         |>>shows sender, subject and perhaps a few other things that I'm
+         |>>forgetting right now) is drawn, but blank. Toggling sidebar_visible
+         |>>doesn't seem to have any effect on this.
+         |
+         |I still saw no screenshot... ;-(
+         |
+         |-  C- 1/1: Rocco Rutte            Re: pager status_on_top fix                    -- (48%)
+
+in the first screen shot, find the line where you think the
+"-  C- 1/1: ... (48%)" should be printed, and tell me it is not blank
+
+> The patch moves the pager status line right by $sidebar_width cells in
+> the first screen line. But: from (0,0) to (0,$sidebar_width) the
+> screen is left blank which looks ugly with colors.
+
+no. it moves the pager status line from (0,0) (where it does not belong)
+to (statusoffset,SW) (where I think it does belong).
+    ^^^^^^^^^^^^
+
+(remember, some of us set pager_index_lines to values != 0)
+
+	Lars
+
+
+From pdmef at gmx.net  Sun Feb 26 15:20:58 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 26 Feb 2006 15:20:58 +0100
+Subject: pager status_on_top fix
+In-Reply-To: <20060226125624.GB18194@soda.linbit>
+References: <20060225193750.GA16782@soda.linbit> <20060226121446.GF16719@bolero.cs.tu-berlin.de> <20060226125624.GB18194@soda.linbit>
+Message-ID: <20060226142058.GK16719@bolero.cs.tu-berlin.de>
+
+* Lars Ellenberg <l.g.e at web.de>:
+
+[...]
+
+>no. it moves the pager status line from (0,0) (where it does not belong)
+>to (statusoffset,SW) (where I think it does belong).
+>    ^^^^^^^^^^^^
+
+>(remember, some of us set pager_index_lines to values != 0)
+
+Yeah, now I see what the problem is. If you set $pager_index_lines to 0 
+and try your patch with colors you'll the gap I meant.
+
+Still we need to know if we want to exclude the sidebar in general, i.e. 
+move all status lines to right to bypass $sidebar_width...
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From l.g.e at web.de  Sun Feb 26 15:30:44 2006
+From: l.g.e at web.de (Lars Ellenberg)
+Date: Sun, 26 Feb 2006 15:30:44 +0100
+Subject: pager status_on_top fix
+In-Reply-To: <20060226142058.GK16719@bolero.cs.tu-berlin.de>
+References: <20060225193750.GA16782@soda.linbit> <20060226121446.GF16719@bolero.cs.tu-berlin.de> <20060226125624.GB18194@soda.linbit> <20060226142058.GK16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226143022.GA17156@soda.linbit>
+
+> >no. it moves the pager status line from (0,0) (where it does not belong)
+> >to (statusoffset,SW) (where I think it does belong).
+> >   ^^^^^^^^^^^^
+> 
+> >(remember, some of us set pager_index_lines to values != 0)
+> 
+> Yeah, now I see what the problem is. If you set $pager_index_lines to
+> 0 and try your patch with colors you'll the gap I meant.
+
+I did already, and I suggest move(statusoffset, statusoffset ? SW : 0)
+for the moment being. I'd sent a new patchlet,
+but as it seems, you first have to make up your mind about:
+
+> Still we need to know if we want to exclude the sidebar in general,
+> i.e. move all status lines to right to bypass $sidebar_width...
+
+in my opinion, sidebar should be sidebar, and all status lines should
+start right of it. which coincidentally makes many offset calculations
+much easier... but thats just me.
+
+	Lars
+
+
+From pdmef at gmx.net  Sun Feb 26 15:51:58 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 26 Feb 2006 15:51:58 +0100
+Subject: Poll: Status lines
+Message-ID: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+
+Hi,
+
+we're currently have some trouble regarding status lines when the 
+sidebar is enabled. The status line for the pager is treated specially 
+since it's the only one always supposed to start next to the sidebar.
+
+Personally I'd like to have consistent behavior. Either we always start 
+next to the sidebar for all kinds of status lines or we start all of 
+them at the very left of the screen.
+
+I want to have all of them next to the sidebar.
+
+Opinions?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From debian at onerussian.com  Sun Feb 26 17:23:19 2006
+From: debian at onerussian.com (Yaroslav Halchenko)
+Date: Sun, 26 Feb 2006 11:23:19 -0500
+Subject: Bug#354422: mutt-ng: do not check for new mail while in compose
+In-Reply-To: <20060226121815.GG16719@bolero.cs.tu-berlin.de>
+References: <E1FDEF5-00058L-NJ@belka.rutgers.edu> <20060226074028.GB4353@aragorn.home.lxtec.de> <20060226121815.GG16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226162318.GA7888@washoe.onerussian.com>
+
+Hi Rocco,
+
+Yeap - it was me :-)
+
+Ok - I will give a try to not forcing check with 0, which indeed sounds
+more logical and 'uniform' way to handle this situation.
+...
+ok - I gave it a try -- and it works nice (why the heck I've decided to
+"Fix" things in the middle of the night? :-)).
+
+Also I believe that there are quite a few other places with forced
+buffy_check which cause slow-downs some times... if it only was possible
+to buffy_check in the background - oberserver-like separation, so there
+is a thread which checks for new emails  and "subjscribed" UI gets
+updated whenever check is completed and if there is new emails at
+all. That would eliminate the nasty delay.
+
+-- 
+                                  .-.
+=------------------------------   /v\  ----------------------------=
+Keep in touch                    // \\     (yoh@|www.)onerussian.com
+Yaroslav Halchenko              /(   )\               ICQ#: 60653192
+                   Linux User    ^^-^^    [175555]
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060226/6ddeab97/attachment.pgp>
+
+From pdmef at gmx.net  Sun Feb 26 17:28:55 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Sun, 26 Feb 2006 17:28:55 +0100
+Subject: Bug#354422: mutt-ng: do not check for new mail while in compose
+In-Reply-To: <20060226162318.GA7888@washoe.onerussian.com>
+References: <E1FDEF5-00058L-NJ@belka.rutgers.edu> <20060226074028.GB4353@aragorn.home.lxtec.de> <20060226121815.GG16719@bolero.cs.tu-berlin.de> <20060226162318.GA7888@washoe.onerussian.com>
+Message-ID: <20060226162855.GM16719@bolero.cs.tu-berlin.de>
+
+* Yaroslav Halchenko <debian at onerussian.com>:
+
+>Yeap - it was me :-)
+
+Cool. ;-)
+
+>Also I believe that there are quite a few other places with forced
+>buffy_check which cause slow-downs some times... if it only was possible
+>to buffy_check in the background - oberserver-like separation, so there
+>is a thread which checks for new emails  and "subjscribed" UI gets
+>updated whenever check is completed and if there is new emails at
+>all. That would eliminate the nasty delay.
+
+The design currently is everything but ready for such a transition... 
+;-((
+
+But looking for other places of buffy_check([12]) sounds reasonable.
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From nion at muttng.org  Sun Feb 26 18:29:02 2006
+From: nion at muttng.org (Nico Golde)
+Date: Sun, 26 Feb 2006 18:29:02 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226172902.GB2651@ngolde.de>
+
+Hallo Rocco,
+
+* Rocco Rutte <pdmef at gmx.net> [2006-02-26 16:52]:
+> we're currently have some trouble regarding status lines when 
+> the sidebar is enabled. The status line for the pager is treated 
+> specially since it's the only one always supposed to start next 
+> to the sidebar.
+> 
+> Personally I'd like to have consistent behavior. Either we 
+> always start next to the sidebar for all kinds of status lines 
+
+[x]
+Regards Nico
+-- 
+Nico Golde - JAB: nion at jabber.ccc.de | GPG: 0x73647CFF
+http://www.ngolde.de | http://www.muttng.org | http://grml.org
+Forget about that mouse with 3/4/5 buttons -
+gimme a keyboard with 103/104/105 keys!
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060226/cddaf893/attachment.pgp>
+
+From riesebie at lxtec.de  Sun Feb 26 18:55:30 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 26 Feb 2006 18:55:30 +0100
+Subject: Bug#354422: mutt-ng: do not check for new mail while in compose
+In-Reply-To: <20060226162318.GA7888@washoe.onerussian.com>
+References: <E1FDEF5-00058L-NJ@belka.rutgers.edu> <20060226074028.GB4353@aragorn.home.lxtec.de> <20060226121815.GG16719@bolero.cs.tu-berlin.de> <20060226162318.GA7888@washoe.onerussian.com>
+Message-ID: <20060226175530.GB8168@aragorn.home.lxtec.de>
+
+On Sun, 26 Feb 2006 the mental interface of
+Yaroslav Halchenko told:
+
+> Hi Rocco,
+> 
+> Yeap - it was me :-)
+> 
+> Ok - I will give a try to not forcing check with 0, which indeed sounds
+> more logical and 'uniform' way to handle this situation.
+> ...
+> ok - I gave it a try -- and it works nice (why the heck I've decided to
+> "Fix" things in the middle of the night? :-)).
+
+Debian bug closed ;)
+
+Elimar
+
+-- 
+    .~.
+    /V\   L   I   N   U   X
+   /( )\ >Phear the Penguin<
+   ^^-^^
+
+
+From riesebie at lxtec.de  Sun Feb 26 18:58:39 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Sun, 26 Feb 2006 18:58:39 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226175839.GC8168@aragorn.home.lxtec.de>
+
+On Sun, 26 Feb 2006 the mental interface of
+Rocco Rutte told:
+
+[...]
+> I want to have all of them next to the sidebar.
+
+ACK
+
+Elimar
+
+-- 
+  Experience is something you don't get until 
+  just after you need it!
+
+
+From akneib at gmx.net  Sun Feb 26 19:18:49 2006
+From: akneib at gmx.net (Andreas Kneib)
+Date: Sun, 26 Feb 2006 19:18:49 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226181849.GA18265@andreas.kneib.biz>
+
+Moin Rocco,
+
+* Rocco Rutte wrote:
+
+> I want to have all of them next to the sidebar.
+
+> Opinions?
+
+Yes! I want to have all of them next to the sidebar! :)
+
+
+Bye,
+Andreas
+
+
+From apaku at gmx.de  Sun Feb 26 19:32:08 2006
+From: apaku at gmx.de (Andreas Pakulat)
+Date: Sun, 26 Feb 2006 19:32:08 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060226183208.GB6551@morpheus.apaku.dnsalias.org>
+
+On 26.02.06 15:51:58, Rocco Rutte wrote:
+> I want to have all of them next to the sidebar.
+
++1
+
+Andreas
+
+-- 
+Chicken Little was right.
+
+
+From pdmef at cs.tu-berlin.de  Sun Feb 26 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Sun, 26 Feb 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-02-26
+Message-ID: <440231C6.mail9ML1LOBF5@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-26.
+
+2006-02-26  17:59:34 +0100  Latest Revision: 789
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - don't force buffy check when entering compose menu after edit; let
+          it decide checks based on regular timeouts (r789)
+
+    Modified Files:
+        - trunk/VERSION.svn, trunk/compose.c
+
+
+From pdmef at gmx.net  Mon Feb 27 10:20:25 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 27 Feb 2006 10:20:25 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060227092025.GN16719@bolero.cs.tu-berlin.de>
+
+* Rocco Rutte <pdmef at gmx.net>:
+
+[...]
+
+What about the help line?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From pdmef at gmx.net  Mon Feb 27 15:07:14 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Mon, 27 Feb 2006 15:07:14 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de>
+Message-ID: <20060227140714.GB19150@bolero.cs.tu-berlin.de>
+
+* Rocco Rutte <pdmef at gmx.net>:
+
+[...]
+
+Sorry for the noise, but I committed the update in r790 as one or the 
+other may have seen already.
+
+I tried to test under some circumstances but am sure I forgot some since 
+there're so many variables ($status_on_top, $help, $pager_index_lines, 
+etc.)
+
+Please report back if everything looks like it's supposed to; if not, 
+please include at least the values for the mentioned options...
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From riesebie at lxtec.de  Mon Feb 27 20:16:46 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Mon, 27 Feb 2006 20:16:46 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060227140714.GB19150@bolero.cs.tu-berlin.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de> <20060227140714.GB19150@bolero.cs.tu-berlin.de>
+Message-ID: <20060227191646.GA15766@frodo.home.lxtec.de>
+
+On Mon, 27 Feb 2006 the mental interface of
+Rocco Rutte told:
+
+> * Rocco Rutte <pdmef at gmx.net>:
+> 
+> [...]
+> 
+> Sorry for the noise, but I committed the update in r790 as one or
+> the other may have seen already.
+> 
+> I tried to test under some circumstances but am sure I forgot some
+> since there're so many variables ($status_on_top, $help,
+> $pager_index_lines, etc.)
+> 
+> Please report back if everything looks like it's supposed to; if
+> not, please include at least the values for the mentioned
+> options...
+
+The help-line alway left margined will look perfect then;) It's like
+reading a Dokument: Start reading a page at the left is the intuitiv
+intention. Hmmm, same should be for the footer (info-line)
+rigorously then?
+
+Elimar
+
+-- 
+  We all know Linux is great... it does infinite loops in 5 seconds.
+        -- Linus Torvalds
+
+
+From pdmef at cs.tu-berlin.de  Mon Feb 27 23:55:06 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Mon, 27 Feb 2006 23:55:06 +0100
+Subject: SVN Repository Changes for 2006-02-27
+Message-ID: <4403834A.mailP6K11DS0N@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-02-27.
+
+2006-02-27  13:39:19 +0100  Latest Revision: 790
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - align (hopefully ;-) all status and help lines to start next to
+          sidebar (if visible) (r790)
+
+    Modified Files:
+        - trunk/pager.c, trunk/status.c, trunk/sidebar.c, trunk/remailer.c,
+          trunk/VERSION.svn, trunk/recvattach.c, trunk/sidebar.h,
+          trunk/curs_main.c, trunk/compose.c, trunk/menu.c
+
+
+From michael at kjorling.com  Tue Feb 28 10:44:33 2006
+From: michael at kjorling.com (Michael Kjorling)
+Date: Tue, 28 Feb 2006 09:44:33 +0000
+Subject: SVN Repository Changes for 2006-02-27
+In-Reply-To: <4403834A.mailP6K11DS0N@cs.tu-berlin.de>
+References: <4403834A.mailP6K11DS0N@cs.tu-berlin.de>
+Message-ID: <44041b81.3c0fb4c6@vuk.kjorling.com>
+
+On 2006-02-27 23:55 +0100, pdmef at cs.tu-berlin.de wrote:
+> 2006-02-27  13:39:19 +0100  Latest Revision: 790
+> 
+>     Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+>         - align (hopefully ;-) all status and help lines to start next to
+>           sidebar (if visible) (r790)
+
+I just installed r790 from the SVN snapshot, and it appears to have
+solved the issues I saw at least, with these settings:
+
+set status_on_top=yes
+set help=yes
+set pager_index_lines=6
+
+The only thing I see which looks a little odd is that the help and
+status lines extend all the way to the left edge of the terminal, but
+the parts above and below the sidebar are not used (they are blank,
+just the background color from my muttngrc). This is most definitely a
+lot better, though.
+
+Thanks, Rocco!
+
+-- 
+Michael Kj?rling, michael at kjorling.com - http://michael.kjorling.com/
+* ..... No bird soars too high if he soars with his own wings ..... *
+* ASCII Ribbon Campaign: Against HTML Mail, Proprietary Attachments *
+* PGP/GnuPG encrypted e-mail preferred * OpenPGP key ID: 0xBDE9ADA6 *
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/mutt-ng-devel/attachments/20060228/ef9f6277/attachment.pgp>
+
+From pdmef at gmx.net  Tue Feb 28 19:45:49 2006
+From: pdmef at gmx.net (Rocco Rutte)
+Date: Tue, 28 Feb 2006 18:45:49 +0000
+Subject: Poll: Status lines
+In-Reply-To: <20060227191646.GA15766@frodo.home.lxtec.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de> <20060227140714.GB19150@bolero.cs.tu-berlin.de> <20060227191646.GA15766@frodo.home.lxtec.de>
+Message-ID: <20060228184549.GA58751@robert.daprodeges.fqdn.th-h.de>
+
+Hi,
+
+* Elimar Riesebieter [06-02-27 20:16:46 +0100] wrote:
+
+>The help-line alway left margined will look perfect then;) It's like
+>reading a Dokument: Start reading a page at the left is the intuitiv
+>intention. Hmmm, same should be for the footer (info-line)
+>rigorously then?
+
+Sounds like you want an option for it?
+
+   bye, Rocco
+-- 
+:wq!
+
+
+From riesebie at lxtec.de  Tue Feb 28 21:30:14 2006
+From: riesebie at lxtec.de (Elimar Riesebieter)
+Date: Tue, 28 Feb 2006 21:30:14 +0100
+Subject: Poll: Status lines
+In-Reply-To: <20060228184549.GA58751@robert.daprodeges.fqdn.th-h.de>
+References: <20060226145158.GL16719@bolero.cs.tu-berlin.de> <20060227140714.GB19150@bolero.cs.tu-berlin.de> <20060227191646.GA15766@frodo.home.lxtec.de> <20060228184549.GA58751@robert.daprodeges.fqdn.th-h.de>
+Message-ID: <20060228203014.GA4351@frodo.home.lxtec.de>
+
+On Tue, 28 Feb 2006 the mental interface of
+Rocco Rutte told:
+
+> Hi,
+> 
+> * Elimar Riesebieter [06-02-27 20:16:46 +0100] wrote:
+> 
+> >The help-line alway left margined will look perfect then;) It's like
+> >reading a Dokument: Start reading a page at the left is the intuitiv
+> >intention. Hmmm, same should be for the footer (info-line)
+> >rigorously then?
+> 
+> Sounds like you want an option for it?
+
+This would be a charm ;)
+
+Elimar
+
+-- 
+  On the keyboard of life you have always
+  to keep a finger at the escape key;-)
+
+

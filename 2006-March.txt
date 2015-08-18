@@ -1,0 +1,220 @@
+From cebewee at gmx.de  Wed Mar  8 12:19:32 2006
+From: cebewee at gmx.de (Lars Noschinski)
+Date: Wed, 8 Mar 2006 12:19:32 +0100
+Subject: Building the manual
+Message-ID: <20060308111932.GA32447@lars.home.noschinski.de>
+
+Hello!
+
+I just discovered a small bug with building the manual files: As I want
+my svn working copy to stay clean, I have an empty directory "build",
+where I call the configure script from trunk and make. This works fine,
+but building the manual fails. Patch attached.
+
+Shouldn't the INSTALL file list optional dependencies like xsltproc,
+latex or breakurl.sty?
+-------------- next part --------------
+Index: Makefile.in
+===================================================================
+--- Makefile.in	(Revision 790)
++++ Makefile.in	(Arbeitskopie)
+@@ -130,21 +130,21 @@
+ 	touch stamp-doc-tex
+ 
+ manual-ng.tex: manual.xml muttng-tex.xsl
+-	xsltproc -o manual-ng.tex muttng-tex.xsl manual-pre.xml
++	xsltproc -o manual-ng.tex $(srcdir)/muttng-tex.xsl manual-pre.xml
+ 
+ manual-ng.pdf: manual-ng.tex muttng.sty
+-	pdflatex -file-line-error manual-ng.tex
+-	pdflatex -file-line-error manual-ng.tex
++	(BD=`pwd`; cd $(srcdir); pdflatex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
++	(BD=`pwd`; cd $(srcdir); pdflatex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
+ 	touch manual-ng.idx
+-	makeindex -s muttng.ist -o manual-ng.ind manual-ng.idx
+-	pdflatex -file-line-error manual-ng.tex
++	makeindex -s $(srcdir)/muttng.ist -o manual-ng.ind manual-ng.idx
++	(BD=`pwd`; cd $(srcdir); pdflatex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
+ 
+ manual-ng.ps: manual-ng.tex muttng.sty
+-	latex -file-line-error manual-ng.tex
+-	latex -file-line-error manual-ng.tex
++	(BD=`pwd`; cd $(srcdir); latex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
++	(BD=`pwd`; cd $(srcdir); latex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
+ 	touch manual-ng.idx
+-	makeindex -s muttng.ist -o manual-ng.ind manual-ng.idx
+-	latex -file-line-error manual-ng.tex
++	makeindex -s $(srcdir)/muttng.ist -o manual-ng.ind manual-ng.idx
++	(BD=`pwd`; cd $(srcdir); latex -file-line-error -output-directory $$BD $(builddir)/manual-ng.tex)
+ 	dvips -o manual-ng.ps manual-ng.dvi
+ 
+ clean: 
+@@ -210,5 +210,5 @@
+ 	( sed -e "s/@VERSION\@/`cat $(top_srcdir)/VERSION.in`-r`cat $(top_srcdir)/VERSION.svn`/" $(srcdir)/manual.xml.head ;\
+ 	  $(MAKEDOC_CPP) $(top_srcdir)/init.h | ../makedoc -s ) |      \
+ 		cat - $(srcdir)/manual.xml.tail > manual-pre.xml
+-	-xsltproc --novalid --nonet muttng-manual.xsl manual-pre.xml > manual.xml
++	-xsltproc --novalid --nonet $(srcdir)/muttng-manual.xsl manual-pre.xml > manual.xml
+ 	touch stamp-doc-xml
+
+From grobian at gentoo.org  Sat Mar 11 10:39:20 2006
+From: grobian at gentoo.org (Grobian)
+Date: Sat, 11 Mar 2006 10:39:20 +0100
+Subject: Smarttime feature patch
+Message-ID: <20060311093920.GA21568@gentoo.org>
+
+Hi list,
+
+Yesterday I decided to implement a long time wish I had for Mutt, and
+thus to dive into Mutt-ng's code to see where I could do that.  To cut a
+long story short: I managed to do what I wanted.
+
+The reason I post to this list is to see if there is some interest in
+what I did, and as a general first time feedback (I hope) on my
+"feature", as well as a discussion on the way it should be done, because
+I made some assumptions in my current implementation.
+
+The feature I implemented, I call 'smarttime'.  In short it does a bit
+like `ls -la` does when displaying the time, it changes the format based
+on how long the time is ago, e.g:
+-rw-r--r--    1   4523 12 Aug  2005 muttng-20050809-r1.ebuild
+-rw-r--r--    1   4296 11 Mar 10:02 muttng-20060309.ebuild
+where the first is so old that it shows the year instead of the time.
+
+I implemented something alike for the $index_format variable, where I
+added the sequence %Q within the {[<( time brackets.  The %Q gets
+replaced by a valid strftime string based on the value of the time that
+is printed and the current time.  An example of "%[%Q] ..." for example
+is:
+15-Feb ...
+15-Feb ...
+27-Feb ...
+Wed-08 ...
+08:33  ...
+where %Q is replaced by a 6 char wide string on the following
+conditions:
+- if the message is in the future: treat as if it were in the past
+- if the message was within the last 12 hours: "%k:%M " (08:33 )
+- if the message was within the last 7 days: "%a-%d"    (Wed-08)
+- if the message was within the last 12 months: "%d-%b" (27-Feb)
+- if the message is older than a year: "%b-%y"          (Aug-04)
+
+As can be seen, I made a number of assumptions, especially on the
+formatting of the date/time, which not everyone will like.  I thought
+about adding %q to for instance deal with am/pm time ( 8:33a), but I
+doubt whether that is flexible enough.  So, this is where I'd like to
+have some feedback.
+I first thought of implementing some conditionals, such that one could
+control which 'steps' to include or not, but maybe people don't like the
+switch-points I chose.  (I'm not sure on them myself either).  Another
+thought was to allow something like %[%H:%M ][%a-%d][%d-%b][%b-%y] such
+that people can define themselves how the four representations should
+look like.  Comments are appreciated!
+
+Last but not least, please find the patch here:
+http://dev.gentoo.org/~grobian/patches/muttng-smarttime.patch
+It compiles and runs on both my OSX ppc and Gentoo Linux x86 machines.
+
+
+-- 
+Fabian Groffen
+Gentoo for Mac OS X Project
+
+
+From pdmef at cs.tu-berlin.de  Tue Mar 14 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Tue, 14 Mar 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-03-14
+Message-ID: <441749C6.mailKQJ1QCZ9Q@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-03-14.
+
+2006-03-14  11:36:31 +0100  Latest Revision: 791
+
+    Lars Noschinski <cebewee at gmx.de> (pdmef):
+        - fix manual building if srcdir!=builddir (r791)
+
+    Modified Files:
+        - trunk/doc/Makefile.in, trunk/doc/manual.txt
+
+
+From kos at supportwizard.com  Mon Mar 20 01:05:51 2006
+From: kos at supportwizard.com (Konstantin Sobolev)
+Date: Mon, 20 Mar 2006 03:05:51 +0300
+Subject: allow_ansi fix (2)
+In-Reply-To: <20060202221152.GA11080@kos.local>
+References: <20060202221152.GA11080@kos.local>
+Message-ID: <20060320000551.GA28509@kos.local>
+
+Hi,
+
+On Fri, Feb 03, 2006 at 01:11:52AM +0300 I wrote:
+> Both mutt-1.5.11 and mutt-ng-20050814 (from Gentoo ebuild) don't 
+> correctly work with allow_ansi option: codes "[39m" (set foreground to 
+> defaut) and "[49m" (set background to default) ignore terminal settings 
+> and always use white and black colors respecitvely. 
+[skipped]
+
+as I can see this patch was incorporated into the latest code, may 
+thanks. However I've found another problem with ANSI colors handling: 
+when mutt spots <ESC>[0 it completely disables all colors, even if there 
+are more attributes following ';'. For example <ESC>[0;34m must result 
+in blue foreground color, but instead we get no colors at all.
+
+Here's my fix:
+
+--- pager.c.orig	2006-02-27 15:39:19.000000000 +0300
++++ pager.c	2006-03-20 02:53:10.448540904 +0300
+@@ -853,12 +853,8 @@
+         pos += 2;
+       }
+       else if (buf[pos] == '0' && (pos + 1 == x || buf[pos + 1] == ';')) {
+-#ifdef HAVE_COLOR
+-        if (a->pair != -1)
+-          mutt_free_color (a->fg, a->bg);
+-#endif
+-        a->attr = ANSI_OFF;
+-        a->pair = -1;
++        a->bg = -2;
++        a->fg = -2;
+         pos += 2;
+       }
+       else if (buf[pos] == '3' && isdigit (buf[pos + 1])) {
+
+BTW elinks CVS code has an option for --dump with ANSI colors, so now it 
+is possible to get colors in HTML mail.
+
+-- 
+/KoS
+* Those who trade freedom for security don't deserve either	      
+
+
+From pdmef at cs.tu-berlin.de  Thu Mar 23 23:55:02 2006
+From: pdmef at cs.tu-berlin.de (Rocco Rutte)
+Date: Thu, 23 Mar 2006 23:55:02 +0100
+Subject: SVN Repository Changes for 2006-03-23
+Message-ID: <44232746.mailK9K1K912N@cs.tu-berlin.de>
+
+This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-03-23.
+
+2006-03-23  11:01:00 +0100  Latest Revision: 796
+
+    Rocco Rutte <pdmef at cs.tu-berlin.de> (pdmef):
+        - include patch #937 to fix bug #6771 (r793)
+        - include patch #936 to fix bug #6770 (r794)
+        - Argh! Revert commit of auto-generated files (r795)
+        - include patch #938 to fix bug #6459 (r796)
+
+    Konstantin Sobolev <kos at supportwizard.com> (pdmef):
+        - don't ignore ANSI colors with $allow_ansi under some circumstances
+          (r792)
+
+    Modified Files:
+        - trunk/m4/Makefile.in, trunk/pager.c, trunk/aclocal.m4,
+          trunk/imap/imap_private.h, trunk/config.h.in, trunk/status.c,
+          trunk/imap/util.c, trunk/VERSION.svn, trunk/thread.c,
+          trunk/doc/manual.txt, trunk/imap/Makefile.in
+
+

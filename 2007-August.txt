@@ -1,0 +1,19 @@
+From pam at mouraf.org  Mon Aug 13 00:20:13 2007
+From: pam at mouraf.org (Pierre-Alexandre Meyer)
+Date: Mon, 13 Aug 2007 00:20:13 +0200
+Subject: Project status
+Message-ID: <20070812222013.GA7747@mouraf.org>
+
+What about the status of the project? Is it still alive?
+
+If so, any roadmap in mind? What about updating muttng to mutt 1.5.1x?
+
+Thanks,
+
+-- 
+,========================.
+| Pierre-Alexandre Meyer |
+| email : pam at mouraf.org |
+`========================' 
+
+

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> sidebar scrolling fixes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060219145410.GB7290%40soda.linbit%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000021.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>sidebar scrolling fixes</H1>
+    <B>Lars Ellenberg</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3C20060219145410.GB7290%40soda.linbit%3E"
+       TITLE="sidebar scrolling fixes">l.g.e at web.de
+       </A><BR>
+    <I>Sun Feb 19 15:54:10 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000021.html">sidebar scrolling fixes
+</A></li>
+        <LI>Next message: <A HREF="000024.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/ 2006-02-19 14:05:51 +0100
+\ Rocco Rutte:
+&gt;<i> * Lars Ellenberg &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">l.g.e at web.de</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;sidebar did not really know where to start and stop drawing lines.
+</I>&gt;<i> &gt;reproduce problem:
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for the fix, I'll include it tomorrow if I have time since I
+</I>&gt;<i> need to fix a minor issue with it (when in pager mode, last_line must
+</I>&gt;<i> be 1 higher as the status bar isn't drawn full-width but only with the
+</I>&gt;<i> width of the pager)
+</I>... unless status_on_top=yes ...
+
+oh, ok.
+my macro bindings make that difficult...
+whenever I enter the pager, the sidebar is hidden automagically...
+
+anyways, just add one line there:
+ int last_line = LINES -
+ 	((option (OPTSTATUSONTOP) &amp;&amp; !option (OPTHELP))
+	? 1 : 2 -(menu == MENU_PAGER));
+ 		       
+
+-- 
+:<i> Lars Ellenberg                                  Tel +43-1-8178292-55 :
+</I>:<i> LINBIT Information Technologies GmbH            Fax +43-1-8178292-82 :
+</I>:<i> Schoenbrunner Str. 244, A-1120 Vienna/Europe   <A HREF="http://www.linbit.com">http://www.linbit.com</A> :
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000021.html">sidebar scrolling fixes
+</A></li>
+	<LI>Next message: <A HREF="000024.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

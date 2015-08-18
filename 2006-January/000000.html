@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> SVN Repository Changes for 2006-01-03
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-01-03&In-Reply-To=%3C43BB00C6.mailI6V1159FR%40cs.tu-berlin.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>SVN Repository Changes for 2006-01-03</H1>
+    <B>Rocco Rutte</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20SVN%20Repository%20Changes%20for%202006-01-03&In-Reply-To=%3C43BB00C6.mailI6V1159FR%40cs.tu-berlin.de%3E"
+       TITLE="SVN Repository Changes for 2006-01-03">pdmef at cs.tu-berlin.de
+       </A><BR>
+    <I>Tue Jan  3 23:55:02 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000001.html">$muttng_folder_name is not folder-aware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This mail is generated automatically and lists changes
+made to the mutt-ng subversion repository on 2006-01-03.
+
+2006-01-03  12:50:42 +0100  Latest Revision: 772
+
+    Rocco Rutte &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">pdmef at cs.tu-berlin.de</A>&gt; (pdmef):
+        - rewrite: add buffer_format() with simple unit test (r771)
+        - rewrite: tune buffer API: move backtick+var expansion out to new
+          buffer_expand() so we can _first_ prepare a line we want to
+          extract tokens from (like a config line only containing $FOOBAR
+          while $FOOBAR contains valid config statements; same goes for
+          backticks) (r772)
+
+    Modified Files:
+        - branches/muttng-rewrite/src/muttng/config/config.cpp,
+          branches/muttng-rewrite/src/core/test/buffer_tests.cpp,
+          branches/muttng-rewrite/src/libmuttng/mailbox/nntp_mailbox.cpp,
+          branches/muttng-rewrite/src/core/buffer.c,
+          branches/muttng-rewrite/src/core/test/buffer_tests.h,
+          branches/muttng-rewrite/src/libmuttng/mailbox/pop3_mailbox.cpp,
+          branches/muttng-rewrite/src/libmuttng/config/option.cpp,
+          branches/muttng-rewrite/src/core/buffer.h
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000001.html">$muttng_folder_name is not folder-aware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

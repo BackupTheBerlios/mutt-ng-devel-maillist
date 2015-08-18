@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> sidebar scrolling fixes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3Cd9MTZFtYukGpUR2cQ%2BMwjf4%3Dlge%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000019.html">
+   <LINK REL="Next"  HREF="000021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>sidebar scrolling fixes</H1>
+    <B>Lars Ellenberg</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20sidebar%20scrolling%20fixes&In-Reply-To=%3Cd9MTZFtYukGpUR2cQ%2BMwjf4%3Dlge%40web.de%3E"
+       TITLE="sidebar scrolling fixes">l.g.e at web.de
+       </A><BR>
+    <I>Fri Feb 17 21:27:52 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000019.html">Mutt-ng devel-r782(based: No sleep with muttng
+</A></li>
+        <LI>Next message: <A HREF="000021.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>sidebar did not really know where to start and stop drawing lines.
+reproduce problem:
+  make your xterm short,
+  use a long list of mailboxes
+  show the sidebar
+  play with &quot;help&quot; and &quot;status_on_top&quot; settings,
+  and try to scoll...
+
+suggested fix is below.
+
+cheers,
+	Lars
+
+Index: sidebar.c
+===================================================================
+--- sidebar.c	(revision 782)
++++ sidebar.c	(working copy)
+@@ -44,7 +44,7 @@
+   if (TopBuffy &lt; 0 || TopBuffy &gt;= Incoming-&gt;length)
+     TopBuffy = 0;
+ 
+-  lines = LINES - 2 - (option (OPTSTATUSONTOP));
++  lines = LINES - 2 - !!option (OPTHELP);
+   known_lines = lines;
+   if (option (OPTSIDEBARNEWMAILONLY)) {
+     int i = CurBuffy;
+@@ -282,8 +282,11 @@
+  */
+ int sidebar_draw (int menu)
+ {
+-
+-  int lines = option (OPTHELP) ? 1 : 0, draw_devider = 1, i = 0;
++  int first_line = option (OPTSTATUSONTOP) ? 1 : option (OPTHELP) ? 1 : 0;
++  int last_line = LINES -
++	  ((option (OPTSTATUSONTOP) &amp;&amp; !option (OPTHELP)) ? 1 : 2);
++  int draw_devider = 1, i = 0;
++  int line;
+   BUFFY *tmp;
+   short delim_len = str_len (SidebarDelim);
+   char blank[SHORT_STRING];
+@@ -319,10 +322,8 @@
+   if (draw_devider == 1){
+     /* draw the divider */
+     SETCOLOR (MT_COLOR_SIDEBAR);
+-    for (lines = 1;
+-         lines &lt; LINES - 1 - (menu != MENU_PAGER || option (OPTSTATUSONTOP));
+-         lines++) {
+-      move (lines, SidebarWidth - delim_len);
++    for (line = first_line; line &lt; last_line; line++) {
++      move (line, SidebarWidth - delim_len);
+       if (option (OPTASCIICHARS))
+         addstr (NONULL (SidebarDelim));
+       else if (!option (OPTASCIICHARS) &amp;&amp; !str_cmp (SidebarDelim, &quot;|&quot;))
+@@ -337,12 +338,11 @@
+ 
+   if (list_empty(Incoming))
+     return 0;
+-  lines = option (OPTHELP) ? 1 : 0;     /* go back to the top */
++  line = first_line;
+   calc_boundaries (menu);
+ 
+   /* actually print items */
+-  for (i = TopBuffy; i &lt; Incoming-&gt;length &amp;&amp; lines &lt; LINES - 1 - 
+-       (menu != MENU_PAGER || option (OPTSTATUSONTOP)); i++) {
++  for (i = TopBuffy; i &lt; Incoming-&gt;length &amp;&amp; line &lt; last_line; i++) {
+     tmp = (BUFFY*) Incoming-&gt;data[i];
+ 
+     if (i == CurBuffy)
+@@ -354,15 +354,15 @@
+     else
+       SETCOLOR (MT_COLOR_NORMAL);
+ 
+-    move (lines, 0);
+-    lines += make_sidebar_entry (tmp-&gt;path, i, SidebarWidth-delim_len);
++    move (line, 0);
++    line += make_sidebar_entry (tmp-&gt;path, i, SidebarWidth-delim_len);
+   }
+ 
+   /* fill with blanks to bottom */
+   memset (&amp;blank, ' ', sizeof (blank));
+   SETCOLOR (MT_COLOR_NORMAL);
+-  for (; lines &lt; LINES - 1 - (menu != MENU_PAGER || option (OPTSTATUSONTOP)); lines++) {
+-    move (lines, 0);
++  for (; line &lt; last_line; line++) {
++    move (line, 0);
+     addnstr (blank, SidebarWidth-delim_len);
+   }
+   return 0;
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000019.html">Mutt-ng devel-r782(based: No sleep with muttng
+</A></li>
+	<LI>Next message: <A HREF="000021.html">sidebar scrolling fixes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>

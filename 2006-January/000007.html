@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Long running bugs in pgp implementation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mutt-ng-devel/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Long%20running%20bugs%20in%20pgp%20implementation&In-Reply-To=%3C20060126134253.GA859%40ikki%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000006.html">
+   <LINK REL="Next"  HREF="000008.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Long running bugs in pgp implementation</H1>
+    <B>Klaus Ethgen</B> 
+    <A HREF="mailto:mutt-ng-devel%40lists.berlios.de?Subject=Re%3A%20Long%20running%20bugs%20in%20pgp%20implementation&In-Reply-To=%3C20060126134253.GA859%40ikki%3E"
+       TITLE="Long running bugs in pgp implementation">Klaus at Ethgen.de
+       </A><BR>
+    <I>Thu Jan 26 14:42:53 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000006.html">SVN Repository Changes for 2006-01-19
+</A></li>
+        <LI>Next message: <A HREF="000008.html">Muttng development
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+I encounted that two long running bugs in mutt are still in mutt-ng as
+well as there are patches arround to fix that.
+
+File pgp.c:
+Line 425 should be replaced by &quot;fc = fgetconv_open (pgpout, body_charset, Charset, 0);&quot;
+Line 1363-1366 should be replaced by &quot;send_charset = body_charset;&quot;
+Line 1368 by &quot;fc = fgetconv_open (fp, from_charset, send_charset, M_ICONV_HOOK_FROM);&quot;
+
+Regards
+   Klaus
+- -- 
+Klaus Ethgen                            <A HREF="http://www.ethgen.de/">http://www.ethgen.de/</A>
+pub  2048R/D1A4EDE5 2000-02-26 Klaus Ethgen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">Klaus at Ethgen.de</A>&gt;
+Fingerprint: D7 67 71 C4 99 A6 D4 FE  EA 40 30 57 3C 88 26 2B
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iQEVAwUBQ9jR3Z+OKpjRpO3lAQLdtQf+K/ghWHqLd9bVs9aiG0oaAIUZSXXPjNhP
+rte3WmF/WdTu23APs5GWT1f8huKaeG9bartX2abZHtvA6VjM9lvD81T6ulD4k5wS
+A84Bi5gDiGFrF5y3+LcfFOfQB7dt684vbDbJiEBsJCSvra9Vvdduxlbi8xthM5E7
+LALSosunsqiysdN2igpM2WvZLvWv20dG201LEr2r3X3LSmrxSfbjgWJqWC6D9W7k
+U9sQnX13KY43RYfeI+ZDwkXSSA1ruZQR6x8R0uSiw1szQm3czQHYZZmjy7xNQ7/x
++hUV6z7jHgrN2FtWrtkEGoD8uKhSQbiYBiCEAxra0y1u4RL/d5f9lQ==
+=xxgV
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000006.html">SVN Repository Changes for 2006-01-19
+</A></li>
+	<LI>Next message: <A HREF="000008.html">Muttng development
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mutt-ng-devel">More information about the Mutt-ng-devel
+mailing list</a><br>
+</body></html>
